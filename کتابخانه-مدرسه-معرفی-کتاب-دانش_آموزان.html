@@ -1,0 +1,3065 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>گنجینه ی کتاب</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
+        rel="stylesheet"
+    >
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Vazirmatn -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-soft: #eef2ff;
+            --success: #059669;
+            --danger: #e11d48;
+            --warning: #ea580c;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 8px 28px rgba(15, 23, 42, .06);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Vazirmatn", Tahoma, sans-serif;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        .app-topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            background: rgba(255, 255, 255, .96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 1.15rem;
+            line-height: 1.25;
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: .72rem;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .app-layout {
+            min-height: calc(100vh - 72px);
+        }
+
+        .sidebar {
+            width: 245px;
+            flex: 0 0 245px;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            padding: 20px 14px;
+        }
+
+        .sidebar-title {
+            color: #94a3b8;
+            font-size: .75rem;
+            margin: 0 10px 10px;
+        }
+
+        .menu-btn {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: var(--muted);
+            padding: 11px 13px;
+            border-radius: 12px;
+            text-align: right;
+            margin-bottom: 5px;
+            transition: .2s;
+        }
+
+        .menu-btn:hover {
+            background: var(--primary-soft);
+            color: var(--primary);
+        }
+
+        .menu-btn.active {
+            background: linear-gradient(135deg, #6366f1, var(--primary));
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, .22);
+        }
+
+        .content {
+            min-width: 0;
+            flex: 1;
+            padding: 28px;
+        }
+
+        .page-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            margin-bottom: .25rem;
+        }
+
+        .page-description {
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-modern {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .category-card {
+            height: 100%;
+            cursor: pointer;
+            transition: .22s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            border-color: #a5b4fc;
+            box-shadow: 0 14px 34px rgba(79, 70, 229, .11);
+        }
+
+        .category-icon {
+            width: 55px;
+            height: 55px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .book-card {
+            height: 100%;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-3px);
+            border-color: #a5b4fc;
+        }
+
+        .book-cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #f1f5f9;
+        }
+
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, .10), transparent 28%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, .08), transparent 28%),
+                var(--bg);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 700px;
+            padding: 35px;
+            border-radius: 26px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(79, 70, 229, .10);
+        }
+
+        .role-card {
+            height: 100%;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--surface);
+            transition: .22s;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            border-color: #a5b4fc;
+            box-shadow: var(--shadow);
+        }
+
+        .role-icon {
+            width: 72px;
+            height: 72px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 2rem;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        .table-modern {
+            min-width: 720px;
+        }
+
+        .table-modern th {
+            white-space: nowrap;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 11px;
+            color: var(--muted);
+            height: 100%;
+        }
+
+        .info-box strong {
+            display: block;
+            color: var(--text);
+            font-size: .95rem;
+            margin-top: 3px;
+        }
+
+        .book-images {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .book-images img {
+            height: 240px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .tag {
+            display: inline-block;
+            background: #fff1f2;
+            color: var(--danger);
+            border: 1px solid #fecdd3;
+            border-radius: 8px;
+            font-size: .72rem;
+            padding: 2px 8px;
+        }
+
+        .search-box {
+            max-width: 600px;
+        }
+
+        .upload-zone {
+            border: 2px dashed #c7d2fe;
+            background: #fafbff;
+            border-radius: 18px;
+            padding: 28px;
+        }
+
+        .stat-number {
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--muted);
+        }
+
+        .star {
+            border: 0;
+            background: transparent;
+            color: #f59e0b;
+            font-size: 1.5rem;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .app-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-basis: auto;
+                border-left: 0;
+                border-bottom: 1px solid var(--border);
+                padding: 10px;
+                overflow-x: auto;
+            }
+
+            .sidebar-title {
+                display: none;
+            }
+
+            .sidebar nav {
+                display: flex;
+                gap: 5px;
+            }
+
+            .menu-btn {
+                width: auto;
+                white-space: nowrap;
+                margin: 0;
+            }
+
+            .content {
+                padding: 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-box {
+                padding: 22px;
+            }
+
+            .page-title {
+                font-size: 1.35rem;
+            }
+        }
+    
+
+/* =========================================================
+   طراحی جدید — الهام‌گرفته از index.html ارسالی
+   فقط لایه‌ی ظاهری تغییر کرده و منطق JavaScript دست‌نخورده است.
+   ========================================================= */
+
+:root{
+    --primary:#4f46e5;
+    --primary-dark:#4338ca;
+    --primary-soft:#eef2ff;
+    --success:#059669;
+    --danger:#e11d48;
+    --warning:#ea580c;
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --text:#1e293b;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --shadow:0 8px 25px rgba(15,23,42,.06);
+}
+
+body{
+    background:#fff;
+    color:var(--text);
+    font-family:"Vazirmatn",Tahoma,sans-serif;
+}
+
+.app-topbar{
+    height:75px;
+    padding:0 25px;
+    background:rgba(255,255,255,.97);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid #e5e7eb;
+    box-shadow:0 3px 18px rgba(15,23,42,.05);
+}
+
+.app-topbar .container-fluid{
+    height:100%;
+    padding-top:0!important;
+    padding-bottom:0!important;
+}
+
+.brand{
+    font-size:21px;
+    font-weight:900;
+    color:#4f46e5;
+}
+
+.brand small{
+    color:#64748b;
+    font-size:11px;
+    display:block;
+    margin-top:3px;
+    font-weight:500;
+}
+
+.app-layout{
+    min-height:calc(100vh - 75px);
+}
+
+.sidebar{
+    width:240px;
+    flex:0 0 240px;
+    background:#fff;
+    border-left:1px solid #e5e7eb;
+    padding:25px 15px;
+    box-shadow:-3px 0 18px rgba(15,23,42,.04);
+}
+
+.sidebar-title{
+    color:#94a3b8;
+    font-size:12px;
+    margin:5px 12px 12px;
+}
+
+.menu-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#64748b;
+    padding:13px 15px;
+    border-radius:12px;
+    text-align:right;
+    margin-bottom:6px;
+    cursor:pointer;
+    transition:.2s;
+    font-weight:500;
+}
+
+.menu-btn:hover{
+    background:linear-gradient(135deg,#ede9fe,#fce7f3);
+    color:#7c3aed;
+}
+
+.menu-btn.active{
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    color:#fff;
+    box-shadow:0 7px 18px rgba(236,72,153,.28);
+}
+
+.content{
+    flex:1;
+    min-width:0;
+    padding:30px;
+    overflow:hidden;
+}
+
+.page-title{
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:8px;
+    color:#1e293b;
+}
+
+.page-description{
+    color:#64748b;
+    margin-bottom:28px;
+}
+
+.card-modern{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:20px;
+    box-shadow:0 7px 25px rgba(15,23,42,.04);
+}
+
+.form-control,
+.form-select{
+    background:#fff!important;
+    color:#1e293b!important;
+    border:1px solid #dbe2ea!important;
+    border-radius:11px!important;
+    min-height:45px;
+}
+
+.form-control:focus,
+.form-select:focus{
+    box-shadow:0 0 0 3px rgba(99,102,241,.10)!important;
+    border-color:#818cf8!important;
+}
+
+label{
+    color:#475569;
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+/* ورود */
+.login-page{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+    background:
+        radial-gradient(circle at 10% 20%,rgba(99,102,241,.08),transparent 28%),
+        radial-gradient(circle at 90% 80%,rgba(236,72,153,.07),transparent 28%),
+        #fff;
+}
+
+.login-box{
+    width:100%;
+    max-width:1000px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:28px;
+    padding:35px;
+    box-shadow:0 20px 60px rgba(79,70,229,.10);
+}
+
+.role-card{
+    height:100%;
+    cursor:pointer;
+    border:1px solid #e5e7eb;
+    border-radius:22px;
+    background:#fff;
+    padding:30px 20px!important;
+    text-align:center;
+    transition:.25s;
+    box-shadow:0 8px 25px rgba(15,23,42,.05);
+}
+
+.role-card:hover{
+    transform:translateY(-6px);
+    border-color:#a5b4fc;
+    box-shadow:0 16px 35px rgba(79,70,229,.14);
+}
+
+.role-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto auto 18px!important;
+    font-size:34px;
+}
+
+.login-box .btn-primary{
+    border:0;
+    color:#fff;
+    border-radius:12px;
+    font-weight:700;
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    box-shadow:0 6px 18px rgba(236,72,153,.30);
+}
+
+/* کارت‌های دسته‌بندی */
+.category-card{
+    height:100%;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    border-radius:24px;
+    padding:26px!important;
+    background:linear-gradient(160deg,var(--soft,#eef2ff) 0%,#fff 62%);
+    border:1.5px solid rgba(var(--rgb,79,70,229),.28);
+    box-shadow:0 14px 30px -12px rgba(var(--rgb,79,70,229),.30);
+    transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s;
+    animation:libraryCardIn .45s ease both;
+}
+
+.category-card::after{
+    content:"";
+    position:absolute;
+    top:-55px;
+    left:-55px;
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(var(--rgb,79,70,229),.16),transparent 68%);
+    pointer-events:none;
+}
+
+.category-card > *{
+    position:relative;
+    z-index:1;
+}
+
+.category-card:hover{
+    transform:translateY(-7px) scale(1.01);
+    border-color:var(--c1,#818cf8);
+    box-shadow:0 22px 42px -14px rgba(var(--rgb,79,70,229),.48);
+}
+
+.category-icon{
+    width:58px;
+    height:58px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:17px;
+    font-size:25px;
+    color:#fff;
+    background:linear-gradient(145deg,var(--c1,#818cf8),var(--c2,#4f46e5));
+    box-shadow:0 10px 20px -6px rgba(var(--rgb,79,70,229),.55);
+    transition:.3s;
+}
+
+.category-card:hover .category-icon{
+    transform:rotate(-6deg) scale(1.08);
+}
+
+.category-card h3{
+    color:var(--c2,#4338ca);
+    font-size:19px;
+    font-weight:800;
+}
+
+.category-card .stat-number{
+    color:var(--c2,#4f46e5);
+    font-size:18px;
+    font-weight:900;
+}
+
+.category-card .btn-primary{
+    border:0;
+    border-radius:12px;
+    font-weight:700;
+    background:linear-gradient(135deg,var(--c1,#6366f1),var(--c2,#4f46e5));
+    box-shadow:0 8px 16px -8px rgba(var(--rgb,79,70,229),.65);
+}
+
+.category-card .btn-outline-primary{
+    color:var(--c2,#4f46e5);
+    border-color:rgba(var(--rgb,79,70,229),.30);
+}
+
+.category-card .btn-outline-danger{
+    border-radius:10px;
+}
+
+/* رنگ‌بندی متناوب مثل کد دوم */
+.row > .col:nth-child(6n+1), 
+.row.row-cols-1 > .col:nth-child(6n+1){
+    --c1:#3b82f6;--c2:#1d4ed8;--soft:#dbeafe;--rgb:29,78,216;
+}
+.row > .col:nth-child(6n+2),
+.row.row-cols-1 > .col:nth-child(6n+2){
+    --c1:#10b981;--c2:#047857;--soft:#d1fae5;--rgb:4,120,87;
+}
+.row > .col:nth-child(6n+3),
+.row.row-cols-1 > .col:nth-child(6n+3){
+    --c1:#f97316;--c2:#c2410c;--soft:#ffedd5;--rgb:194,65,12;
+}
+.row > .col:nth-child(6n+4),
+.row.row-cols-1 > .col:nth-child(6n+4){
+    --c1:#8b5cf6;--c2:#6d28d9;--soft:#ede9fe;--rgb:109,40,217;
+}
+.row > .col:nth-child(6n+5),
+.row.row-cols-1 > .col:nth-child(6n+5){
+    --c1:#ec4899;--c2:#be185d;--soft:#fce7f3;--rgb:190,24,93;
+}
+.row > .col:nth-child(6n),
+.row.row-cols-1 > .col:nth-child(6n){
+    --c1:#14b8a6;--c2:#0f766e;--soft:#ccfbf1;--rgb:15,118,110;
+}
+
+@keyframes libraryCardIn{
+    from{opacity:0;transform:translateY(16px) scale(.98)}
+    to{opacity:1;transform:none}
+}
+
+/* کارت کتاب */
+.book-card{
+    height:100%;
+    cursor:pointer;
+    padding:8px!important;
+    border-radius:20px;
+    overflow:hidden;
+    transition:transform .3s,box-shadow .3s,border-color .3s;
+    box-shadow:0 7px 22px rgba(15,23,42,.06);
+}
+
+.book-card:hover{
+    transform:translateY(-6px);
+    border-color:#a5b4fc;
+    box-shadow:0 18px 35px rgba(79,70,229,.15);
+}
+
+.book-cover{
+    width:100%;
+    aspect-ratio:3/4;
+    object-fit:cover;
+    border-radius:15px;
+    background:#f1f5f9;
+    transition:.3s;
+}
+
+.book-card:hover .book-cover{
+    transform:scale(1.015);
+}
+
+.tag{
+    display:inline-block;
+    background:#fff1f2;
+    color:#e11d48;
+    border:1px solid #fecdd3;
+    border-radius:8px;
+    font-size:.72rem;
+    padding:2px 8px;
+}
+
+/* جستجو و پنل‌ها */
+.search-box{
+    max-width:600px;
+}
+
+.search-box .input-group-text{
+    border:1px solid #dbe2ea;
+    border-left:0;
+    border-radius:11px 0 0 11px;
+}
+
+.upload-zone{
+    border:2px dashed #c7d2fe;
+    background:#fafbff;
+    border-radius:18px;
+    padding:28px;
+}
+
+.table-modern{
+    min-width:720px;
+}
+
+.table-modern th{
+    white-space:nowrap;
+    color:#64748b;
+    font-weight:700;
+}
+
+.info-box{
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:13px;
+    padding:11px;
+    color:#64748b;
+    height:100%;
+}
+
+.stat-number{
+    font-size:1.55rem;
+    font-weight:900;
+    color:var(--primary);
+}
+
+.star{
+    border:0;
+    background:transparent;
+    color:#f59e0b;
+    font-size:1.5rem;
+    padding:0 2px;
+    cursor:pointer;
+}
+
+.empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:#94a3b8;
+}
+
+/* دکمه‌ها */
+.btn-primary{
+    background:linear-gradient(135deg,#6366f1,#4f46e5);
+    border:0;
+    border-radius:11px;
+    box-shadow:0 5px 15px rgba(79,70,229,.18);
+}
+
+.btn-success{
+    background:linear-gradient(135deg,#34d399,#059669);
+    border:0;
+    border-radius:11px;
+}
+
+.btn-outline-danger{
+    border-radius:10px;
+}
+
+.btn{
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+}
+
+.modal-content{
+    background:#fff;
+    color:#1e293b;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    box-shadow:0 20px 60px rgba(15,23,42,.18);
+}
+
+.modal-header{
+    border-bottom:1px solid #e2e8f0;
+    background:#fafaff;
+}
+
+.modal-footer{
+    border-top:1px solid #e2e8f0;
+}
+
+/* موبایل: مشابه ساختار کد دوم */
+@media(max-width:900px){
+    .app-layout{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        flex-basis:auto;
+        border-left:0;
+        border-bottom:1px solid #e5e7eb;
+        padding:10px;
+        overflow-x:auto;
+    }
+
+    .sidebar-title{
+        display:none;
+    }
+
+    .sidebar nav{
+        display:flex;
+        gap:5px;
+    }
+
+    .menu-btn{
+        width:auto;
+        white-space:nowrap;
+        margin:0;
+    }
+
+    .content{
+        padding:18px;
+    }
+}
+
+@media(max-width:576px){
+    .app-topbar{
+        padding:0 15px;
+    }
+
+    .brand{
+        font-size:17px;
+    }
+
+    .login-box{
+        padding:22px;
+    }
+
+    .page-title{
+        font-size:22px;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .category-card{
+        padding:21px!important;
+    }
+}
+
+</style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script>
+/* =========================================================
+   1. تنظیمات و داده‌های پایه
+   ========================================================= */
+
+const GRADES = ["هفتم", "هشتم", "نهم"];
+
+const DEFAULT_SUBJECTS = [
+    "علمی",
+    "زندگی‌نامه",
+    "کمک درسی",
+    "داستان و رمان",
+    "شعر و ادبیات",
+    "تاریخ",
+    "جغرافیا",
+    "دینی و اخلاقی",
+    "هنر",
+    "ورزش",
+    "کامپیوتر و فناوری",
+    "مهارت‌های زندگی",
+    "طنز و سرگرمی",
+    "مرجع و دایرةالمعارف"
+];
+
+const SUBJECT_ICONS = {
+    "علمی": "bi bi-beaker",
+    "زندگی‌نامه": "bi bi-person-vcard",
+    "کمک درسی": "bi bi-pencil-square",
+    "داستان و رمان": "bi bi-book",
+    "شعر و ادبیات": "bi bi-feather",
+    "تاریخ": "bi bi-bank",
+    "جغرافیا": "bi bi-globe2",
+    "دینی و اخلاقی": "bi bi-moon-stars",
+    "هنر": "bi bi-palette",
+    "ورزش": "bi bi-trophy",
+    "کامپیوتر و فناوری": "bi bi-pc-display",
+    "مهارت‌های زندگی": "bi bi-compass",
+    "طنز و سرگرمی": "bi bi-emoji-smile",
+    "مرجع و دایرةالمعارف": "bi bi-journals"
+};
+
+const QUOTES = [
+    "کتاب خوب، دوستی است که هرگز تو را ترک نمی‌کند.",
+    "هر صفحه‌ای که می‌خوانی، پنجره‌ای تازه به دنیاست.",
+    "خواندن، ورزش مغز است.",
+    "هر کتاب، ماجرایی تازه برای ذهن توست.",
+    "کتاب، کلید گنجینه‌ی دانایی است."
+];
+
+const DAY = 86400000;
+
+function createDefaultState() {
+    return {
+        cats: DEFAULT_SUBJECTS.map((name, index) => ({
+            id: `c${index}`,
+            name
+        })),
+        students: [],
+        books: [],
+        res: [],
+        over: {},
+        recs: [],
+        model: [],
+        top: null,
+        days: 7,
+        pw: "admin123"
+    };
+}
+
+let S = loadState();
+if (!Array.isArray(S.recs)) S.recs = [];
+// برای دانش‌آموزانی که قبل از اضافه شدن سیستم رمز ساخته شده‌اند،
+// کد دانش‌آموز به‌عنوان رمز اولیه ثبت می‌شود.
+if (Array.isArray(S.students)) {
+    S.students.forEach(student => {
+        if (!student.password) student.password = String(student.code);
+    });
+    try { localStorage.setItem("school-library-v4", JSON.stringify(S)); } catch(e) {}
+}
+let U = null;
+let V = { v: "login" };
+let HISTORY = [];
+let ROLE = "";
+let SEARCH = "";
+
+function loadState() {
+    try {
+        return JSON.parse(localStorage.getItem("school-library-v4")) || createDefaultState();
+    } catch {
+        return createDefaultState();
+    }
+}
+
+function saveState() {
+    try {
+        localStorage.setItem("school-library-v4", JSON.stringify(S));
+    } catch {
+        alert("حافظه مرورگر پر شده است.");
+    }
+}
+
+/* =========================================================
+   2. ابزارهای عمومی
+   ========================================================= */
+
+const $ = selector => document.querySelector(selector);
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    }[char]));
+}
+
+function dateFa(value) {
+    if (!value) return "-";
+    return new Date(value).toLocaleDateString("fa-IR");
+}
+
+function hashString(value) {
+    let hash = 7;
+    for (const char of String(value)) {
+        hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+    }
+    return hash;
+}
+
+function findStudent(code) {
+    return S.students.find(student => student.code == code);
+}
+
+function findBook(ip) {
+    return S.books.find(book => String(book.ip) === String(ip));
+}
+
+function bookName(book) {
+    return S.over[book.ip]?.name || book.name;
+}
+
+function activeReservation(ip) {
+    return S.res.find(item => String(item.book) === String(ip) && !item.done);
+}
+
+function reservationExpired(reservation) {
+    return Date.now() >= reservation.due;
+}
+
+function gradeFrom(value) {
+    const text = String(value ?? "").trim();
+    return GRADES.find(grade => text.includes(grade)) || text;
+}
+
+function normalizeHeader(value) {
+    return String(value ?? "")
+        .replace(/\u200c/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function createId(prefix = "id") {
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function navigate(view, params = {}) {
+    HISTORY.push(V);
+    V = { v: view, ...params };
+    render();
+    window.scrollTo(0, 0);
+}
+
+function navigateRoot(view = "home") {
+    HISTORY = [];
+    V = { v: view };
+    SEARCH = "";
+    render();
+    window.scrollTo(0, 0);
+}
+
+function goBack() {
+    V = HISTORY.pop() || { v: "home" };
+    render();
+}
+
+/* =========================================================
+   3. دسته‌بندی‌ها
+   ========================================================= */
+
+function categoryById(id) {
+    for (const category of S.cats) {
+        if (category.id === id) return category;
+
+        for (const sub of category.subs || []) {
+            if (sub.id === id) return sub;
+        }
+    }
+
+    return null;
+}
+
+function booksByCategory(id) {
+    const category = categoryById(id);
+    if (!category) return [];
+
+    if (category.grade) {
+        return S.books.filter(book => book.grade === category.grade);
+    }
+
+    return S.books.filter(book => book.subject === category.name);
+}
+
+function ensureCategory(subject) {
+    const cleanSubject = normalizeHeader(subject);
+    if (!cleanSubject) return;
+
+    const exists = S.cats.some(
+        category => normalizeHeader(category.name) === cleanSubject
+    );
+
+    if (!exists) {
+        S.cats.push({
+            id: createId("cat"),
+            name: cleanSubject
+        });
+    }
+}
+
+function renameCategory(id) {
+    const category = categoryById(id);
+    if (!category) return;
+
+    const oldName = category.name;
+    const newName = prompt("نام جدید دسته‌بندی:", oldName);
+
+    if (!newName || !newName.trim()) return;
+
+    category.name = newName.trim();
+
+    if (!category.subs && !category.grade) {
+        S.books.forEach(book => {
+            if (book.subject === oldName) {
+                book.subject = category.name;
+            }
+        });
+    }
+
+    saveState();
+    render();
+}
+
+function deleteCategory(id) {
+    const category = categoryById(id);
+    if (!category) return;
+
+    if (!confirm(`دسته «${category.name}» حذف شود؟ کتاب‌ها حذف نخواهند شد.`)) {
+        return;
+    }
+
+    S.cats = S.cats.filter(item => item.id !== id);
+    saveState();
+    render();
+}
+
+function addCategory() {
+    const name = prompt("نام دسته‌بندی جدید:");
+
+    if (!name?.trim()) return;
+
+    ensureCategory(name);
+    saveState();
+    render();
+}
+
+/* =========================================================
+   4. تصاویر جلد کتاب
+   ========================================================= */
+
+function createCover(title, hue, variation) {
+    const safeTitle = String(title).slice(0, 42);
+
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="400">
+            <rect width="300" height="400" fill="hsl(${hue},60%,45%)"/>
+            <rect x="20" y="20" width="260" height="360"
+                  fill="none" stroke="#fff" stroke-width="3" opacity=".6"/>
+            <circle cx="150" cy="130"
+                    r="${50 + variation * 15}"
+                    fill="hsl(${hue + 40},70%,70%)"
+                    opacity=".8"/>
+            <text x="150" y="260" font-size="22"
+                  fill="#fff" text-anchor="middle"
+                  font-family="Tahoma">
+                ${escapeHTML(safeTitle.slice(0, 20))}
+            </text>
+            <text x="150" y="295" font-size="16"
+                  fill="#fff" text-anchor="middle"
+                  font-family="Tahoma">
+                ${escapeHTML(safeTitle.slice(20))}
+            </text>
+        </svg>
+    `;
+
+    return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+function bookImages(book) {
+    const hue = hashString(`${book.ip}${book.name}`) % 360;
+
+    const images = [0, 1, 2].map(
+        variation => createCover(bookName(book), hue + variation * 20, variation)
+    );
+
+    if (S.over[book.ip]?.img) {
+        images[0] = S.over[book.ip].img;
+    }
+
+    return images;
+}
+
+/* =========================================================
+   5. Excel
+   ========================================================= */
+
+function readExcel(file, callback) {
+    if (!file) {
+        alert("ابتدا فایل Excel را انتخاب کنید.");
+        return;
+    }
+
+    if (typeof XLSX === "undefined") {
+        alert("کتابخانه Excel بارگذاری نشده است.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = event => {
+        try {
+            const workbook = XLSX.read(event.target.result, {
+                type: "array"
+            });
+
+            if (!workbook.SheetNames.length) {
+                throw new Error("No sheet");
+            }
+
+            /*
+             * تمام شیت‌ها خوانده می‌شوند.
+             * این موضوع باعث می‌شود اگر در آینده فایل Excel
+             * چند شیت داشته باشد، اطلاعات از هیچ شیتی جا نماند.
+             */
+            const allRows = [];
+
+            workbook.SheetNames.forEach(sheetName => {
+                const sheet = workbook.Sheets[sheetName];
+
+                const rows = XLSX.utils.sheet_to_json(sheet, {
+                    header: 1,
+                    defval: "",
+                    raw: false
+                });
+
+                rows.forEach(row => {
+                    if (row.some(cell => String(cell).trim() !== "")) {
+                        allRows.push(row);
+                    }
+                });
+            });
+
+            callback(allRows);
+        } catch (error) {
+            console.error(error);
+            alert("فایل Excel خوانده نشد.");
+        }
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+function findColumnIndexes(rows) {
+    const aliases = {
+        name: ["نام کتاب", "عنوان کتاب", "نام"],
+        subject: ["موضوع", "دسته بندی", "دسته‌بندی", "دسته"],
+        author: ["نام نویسنده", "نویسنده", "مولف", "مؤلف"],
+        date: ["تاریخ انتشار", "تاریخ"],
+        grade: ["پایه تحصیلی", "پایه", "مقطع"],
+        ip: ["ip", "شماره کتاب", "شماره"]
+    };
+
+    let headerIndex = -1;
+
+    for (let i = 0; i < Math.min(rows.length, 15); i++) {
+        const normalized = rows[i].map(normalizeHeader);
+
+        if (
+            normalized.some(cell => aliases.name.includes(cell)) &&
+            normalized.some(cell => aliases.subject.includes(cell))
+        ) {
+            headerIndex = i;
+            break;
+        }
+    }
+
+    if (headerIndex === -1) {
+        return null;
+    }
+
+    const header = rows[headerIndex].map(normalizeHeader);
+    const indexes = {};
+
+    Object.entries(aliases).forEach(([key, possibleNames]) => {
+        indexes[key] = header.findIndex(
+            cell => possibleNames.includes(cell.toLowerCase())
+        );
+    });
+
+    return {
+        headerIndex,
+        indexes
+    };
+}
+
+function importBooks(addToExisting = false) {
+    const input = $("#booksExcel");
+    const file = input?.files?.[0];
+
+    if (!file) {
+        alert("فایل Excel را انتخاب کنید.");
+        return;
+    }
+
+    readExcel(file, rows => {
+        const structure = findColumnIndexes(rows);
+
+        if (!structure || structure.indexes.name === -1) {
+            alert(
+                "ساختار فایل شناسایی نشد.\n\n" +
+                "حداقل ستون «نام کتاب» باید وجود داشته باشد."
+            );
+            return;
+        }
+
+        const { headerIndex, indexes } = structure;
+
+        const importedBooks = [];
+        const existingIps = new Set(
+            addToExisting
+                ? S.books.map(book => String(book.ip))
+                : []
+        );
+
+        let nextIp = Math.max(
+            0,
+            ...S.books.map(book => Number(book.ip) || 0)
+        );
+
+        let addedCategories = 0;
+
+        for (let i = headerIndex + 1; i < rows.length; i++) {
+            const row = rows[i];
+
+            const name = String(
+                row[indexes.name] ?? ""
+            ).trim();
+
+            if (!name) continue;
+
+            const subject = indexes.subject >= 0
+                ? String(row[indexes.subject] ?? "").trim()
+                : "";
+
+            const author = indexes.author >= 0
+                ? String(row[indexes.author] ?? "").trim()
+                : "";
+
+            const date = indexes.date >= 0
+                ? String(row[indexes.date] ?? "").trim()
+                : "";
+
+            const grade = indexes.grade >= 0
+                ? gradeFrom(row[indexes.grade])
+                : "";
+
+            let ip = indexes.ip >= 0
+                ? String(row[indexes.ip] ?? "").trim()
+                : "";
+
+            if (!ip || existingIps.has(ip)) {
+                do {
+                    nextIp++;
+                    ip = String(nextIp);
+                } while (existingIps.has(ip));
+            }
+
+            existingIps.add(ip);
+
+            const before = S.cats.length;
+            ensureCategory(subject);
+            if (S.cats.length > before) {
+                addedCategories++;
+            }
+
+            importedBooks.push({
+                ip,
+                name,
+                subject,
+                author,
+                date,
+                grade
+            });
+        }
+
+        if (!importedBooks.length) {
+            alert("هیچ کتابی در فایل پیدا نشد.");
+            return;
+        }
+
+        S.books = addToExisting
+            ? [...S.books, ...importedBooks]
+            : importedBooks;
+
+        saveState();
+
+        alert(
+            `${importedBooks.length} کتاب ثبت شد.` +
+            (addedCategories
+                ? `\n${addedCategories} دسته‌بندی جدید نیز از Excel ساخته شد.`
+                : "")
+        );
+
+        input.value = "";
+        render();
+    });
+}
+
+/* =========================================================
+   6. منوی پنل
+   ========================================================= */
+
+function menuItems() {
+    if (U.role === "admin") {
+        return [
+            ["home", "bi bi-book", "کتابخانه"],
+            ["reservations", "bi bi-clipboard-check", "رزروها"],
+            ["booksExcel", "bi bi-file-earmark-excel", "کتاب‌ها (Excel)"],
+            ["students", "bi bi-people", "کاربران"],
+            ["settings", "bi bi-gear", "تنظیمات"]
+        ];
+    }
+
+    return [
+        ["home", "bi bi-book", "کتابخانه"],
+        ["mine", "bi bi-journal-bookmark", "کتاب‌های من"],
+        ["rank", "bi bi-trophy", "رتبه‌بندی"],
+        ["recommendations", "bi bi-chat-quote", "معرفی‌های دانش‌آموزان"]
+    ];
+}
+
+/* =========================================================
+   7. رندر اصلی
+   ========================================================= */
+
+function render() {
+    const root = $("#root");
+
+    if (!U) {
+        root.innerHTML = loginView();
+        return;
+    }
+
+    const active = [
+        "reservations",
+        "booksExcel",
+        "students",
+        "settings",
+        "mine",
+        "rank",
+        "recommendations"
+    ].includes(V.v) ? V.v : "home";
+
+    const views = {
+        home: homeView,
+        cat: categoryView,
+        list: bookListView,
+        book: bookDetailView,
+        success: successView,
+        mine: myBooksView,
+        rank: rankingView,
+        recommendations: recommendationsView,
+        reservations: reservationsView,
+        booksExcel: excelView,
+        students: studentsView,
+        settings: settingsView
+    };
+
+    root.innerHTML = `
+        <header class="app-topbar">
+            <div class="container-fluid px-3 px-lg-4 py-3">
+                <div class="d-flex align-items-center justify-content-between gap-3">
+                    <div class="brand">
+                        گنجینه ی کتاب
+                        <small>
+                            ${U.role === "admin" ? "پنل مدیریت" : "پنل دانش‌آموز"}
+                        </small>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-secondary d-none d-sm-inline">
+                            <i class="bi bi-person-circle"></i>
+                            ${U.role === "admin"
+                                ? "مدیر"
+                                : escapeHTML(findStudent(U.code)?.name || "")}
+                        </span>
+
+                        <button class="btn btn-sm btn-outline-danger"
+                                onclick="logout()">
+                            <i class="bi bi-box-arrow-right"></i>
+                            خروج
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-layout d-flex">
+            <aside class="sidebar">
+                <div class="sidebar-title">منوی اصلی</div>
+
+                <nav>
+                    ${menuItems().map(item => `
+                        <button class="menu-btn ${item[0] === active ? "active" : ""}"
+                                onclick="navigateRoot('${item[0]}')">
+                            <i class="${item[1]} ms-1"></i>
+                            ${item[2]}
+                        </button>
+                    `).join("")}
+                </nav>
+            </aside>
+
+            <main class="content">
+                ${views[V.v]?.() || homeView()}
+            </main>
+        </div>
+    `;
+
+    if (V.v === "list") {
+        drawBookGrid();
+    }
+}
+
+function logout() {
+    U = null;
+    HISTORY = [];
+    V = { v: "login" };
+    SEARCH = "";
+    render();
+}
+
+/* =========================================================
+   8. ورود
+   ========================================================= */
+
+function loginView() {
+    return `
+        <div class="login-page">
+            <div class="login-box">
+                <div class="text-center mb-4">
+                    <div class="display-6 fw-black text-primary mb-2">
+                        <i class="bi bi-book-half"></i>
+                    </div>
+                    <h1 class="h3 fw-bold mb-2">گنچینه ی کتاب</h1>
+                    <p class="text-secondary mb-0">
+                        ورود به سامانه امانت کتاب
+                    </p>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="role-card p-4 text-center"
+                             onclick="selectLoginRole('student')">
+                            <div class="role-icon bg-success-subtle text-success mb-3">
+                                <i class="bi bi-mortarboard"></i>
+                            </div>
+                            <h3 class="h5 fw-bold">دانش‌آموز</h3>
+                            <p class="text-secondary small mb-0">
+                                رزرو کتاب و مشاهده امتیاز
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="role-card p-4 text-center"
+                             onclick="selectLoginRole('admin')">
+                            <div class="role-icon bg-primary-subtle text-primary mb-3">
+                                <i class="bi bi-person-gear"></i>
+                            </div>
+                            <h3 class="h5 fw-bold">مدیر</h3>
+                            <p class="text-secondary small mb-0">
+                                مدیریت کتاب‌ها و دانش‌آموزان
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loginForm" class="card-modern p-3 mt-4 d-none">
+                    <label id="loginLabel" class="form-label fw-bold"></label>
+
+                    <div class="input-group">
+                        <input id="loginInput"
+                               class="form-control"
+                               onkeydown="if(event.key === 'Enter') doLogin()">
+
+                        <button class="btn btn-primary px-4"
+                                onclick="doLogin()">
+                            ورود
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function selectLoginRole(role) {
+    ROLE = role;
+
+    const form = $("#loginForm");
+    const label = $("#loginLabel");
+    const input = $("#loginInput");
+
+    form.classList.remove("d-none");
+
+    label.textContent =
+        role === "student"
+            ? "رمز عبور دانش‌آموز را وارد کنید"
+            : "رمز مدیر را وارد کنید";
+
+    input.type = "password";
+    input.placeholder = role === "student" ? "رمز عبور دانش‌آموز" : "رمز مدیر";
+    input.value = "";
+
+    const passwordBox = document.getElementById("studentPasswordBox");
+    if (passwordBox) passwordBox.remove();
+
+    input.focus();
+}
+
+function doLogin() {
+    const value = $("#loginInput")?.value.trim();
+
+    if (!value) {
+        alert("لطفاً رمز عبور را وارد کنید.");
+        return;
+    }
+
+    if (ROLE === "admin") {
+        if (value !== S.pw) {
+            alert("رمز مدیر اشتباه است.");
+            return;
+        }
+
+        U = { role: "admin" };
+    } else {
+        // ورود دانش‌آموز فقط با رمز عبور؛ نیازی به کد دانش‌آموز نیست.
+        const student = (S.students || []).find(s => String(s.password || "") === value);
+
+        if (!student) {
+            alert("رمز عبور دانش‌آموز اشتباه است.");
+            return;
+        }
+
+        U = {
+            role: "student",
+            code: student.code,
+            name: student.name,
+            quote: QUOTES[Math.floor(Math.random() * QUOTES.length)]
+        };
+    }
+
+    U.quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    navigateRoot("home");
+}
+
+/* =========================================================
+   9. صفحه اصلی و دسته‌بندی
+   ========================================================= */
+
+function homeView() {
+    const isAdmin = U.role === "admin";
+
+    let html = `
+        <div class="page-title">دسته‌بندی‌های کتابخانه</div>
+        <div class="page-description">
+            دسته مورد نظر را انتخاب کنید.
+        </div>
+    `;
+
+    if (U.quote) {
+        html += `
+            <div class="alert alert-primary border-0 shadow-sm">
+                <i class="bi bi-lightbulb"></i>
+                ${escapeHTML(U.quote)}
+            </div>
+        `;
+    }
+
+    if (!S.books.length) {
+        html += `
+            <div class="card-modern p-4 mb-4">
+                <i class="bi bi-info-circle text-primary"></i>
+                هنوز کتابی ثبت نشده است.
+                ${isAdmin
+                    ? "از بخش «کتاب‌ها (Excel)» فایل Excel را بارگذاری کنید."
+                    : ""}
+            </div>
+        `;
+    }
+
+    html += `
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
+            ${S.cats.map(category => {
+                const count = category.subs
+                    ? S.books.filter(book => book.grade).length
+                    : booksByCategory(category.id).length;
+
+                return `
+                    <div class="col">
+                        <div class="card-modern category-card p-4"
+                             onclick="navigate('${category.subs ? "cat" : "list"}',{id:'${category.id}'})">
+
+                            <div class="category-icon mb-3">
+                                <i class="${category.subs
+                                    ? "bi bi-mortarboard"
+                                    : SUBJECT_ICONS[category.name] || "bi bi-book"}"></i>
+                            </div>
+
+                            <h3 class="h6 fw-bold mb-2">
+                                ${escapeHTML(category.name)}
+                            </h3>
+
+                            <div class="small text-secondary mb-3">
+                                <span class="stat-number d-block">
+                                    ${count}
+                                </span>
+                                کتاب
+                            </div>
+
+                            ${isAdmin ? `
+                                <div class="d-flex gap-2"
+                                     onclick="event.stopPropagation()">
+                                    <button class="btn btn-sm btn-outline-primary"
+                                            onclick="renameCategory('${category.id}')">
+                                        <i class="bi bi-pencil"></i>
+                                        نام
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            onclick="deleteCategory('${category.id}')">
+                                        <i class="bi bi-trash"></i>
+                                        حذف
+                                    </button>
+                                </div>
+                            ` : `
+                                <button class="btn btn-primary btn-sm w-100">
+                                    مشاهده کتاب‌ها
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                `;
+            }).join("")}
+        </div>
+    `;
+
+    if (isAdmin) {
+        html += `
+            <button class="btn btn-success mt-4"
+                    onclick="addCategory()">
+                <i class="bi bi-plus-lg"></i>
+                دسته‌بندی جدید
+            </button>
+        `;
+    }
+
+    return html;
+}
+
+function categoryView() {
+    const category = categoryById(V.id);
+
+    if (!category) {
+        return `<div class="alert alert-danger">دسته‌بندی پیدا نشد.</div>`;
+    }
+
+    return `
+        <div class="mb-3">
+            <button class="btn btn-outline-secondary btn-sm"
+                    onclick="goBack()">
+                <i class="bi bi-arrow-right"></i>
+                بازگشت
+            </button>
+        </div>
+
+        <div class="page-title">${escapeHTML(category.name)}</div>
+        <div class="page-description">
+            پایه تحصیلی مورد نظر را انتخاب کنید.
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+            ${(category.subs || []).map(sub => `
+                <div class="col">
+                    <div class="card-modern category-card p-4"
+                         onclick="navigate('list',{id:'${sub.id}'})">
+                        <div class="category-icon mb-3">
+                            <i class="bi bi-bookmark"></i>
+                        </div>
+
+                        <h3 class="h6 fw-bold">
+                            ${escapeHTML(sub.name)}
+                        </h3>
+
+                        <div class="small text-secondary mb-3">
+                            ${booksByCategory(sub.id).length} کتاب
+                        </div>
+
+                        <button class="btn btn-primary btn-sm w-100">
+                            مشاهده
+                        </button>
+                    </div>
+                </div>
+            `).join("")}
+        </div>
+    `;
+}
+
+/* =========================================================
+   10. فهرست کتاب‌ها
+   ========================================================= */
+
+function bookListView() {
+    const category = categoryById(V.id);
+
+    if (!category) {
+        return `<div class="alert alert-danger">دسته‌بندی پیدا نشد.</div>`;
+    }
+
+    return `
+        <div class="mb-3">
+            <button class="btn btn-outline-secondary btn-sm"
+                    onclick="goBack()">
+                <i class="bi bi-arrow-right"></i>
+                بازگشت
+            </button>
+        </div>
+
+        <div class="page-title">${escapeHTML(category.name)}</div>
+        <div class="page-description">
+            ${booksByCategory(V.id).length} کتاب
+        </div>
+
+        <div class="search-box mb-4">
+            <div class="input-group">
+                <span class="input-group-text bg-white">
+                    <i class="bi bi-search"></i>
+                </span>
+
+                <input id="bookSearch"
+                       class="form-control"
+                       placeholder="جستجوی نام کتاب یا نویسنده..."
+                       value="${escapeHTML(SEARCH)}"
+                       oninput="SEARCH=this.value;drawBookGrid()">
+            </div>
+        </div>
+
+        <div id="bookGrid"
+             class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3">
+        </div>
+    `;
+}
+
+function drawBookGrid() {
+    const grid = $("#bookGrid");
+    if (!grid) return;
+
+    const query = SEARCH.trim().toLowerCase();
+
+    const books = booksByCategory(V.id).filter(book => {
+        const text = `${bookName(book)} ${book.author}`.toLowerCase();
+        return !query || text.includes(query);
+    });
+
+    if (!books.length) {
+        grid.innerHTML = `
+            <div class="col-12">
+                <div class="empty-state card-modern">
+                    <i class="bi bi-search fs-1 d-block mb-3"></i>
+                    کتابی پیدا نشد.
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = books.map(book => {
+        const reservation = activeReservation(book.ip);
+
+        return `
+            <div class="col">
+                <div class="card-modern book-card p-2"
+                     onclick="navigate('book',{ip:'${escapeHTML(book.ip)}'})">
+
+                    <img class="book-cover"
+                         loading="lazy"
+                         src="${bookImages(book)[0]}"
+                         alt="${escapeHTML(bookName(book))}">
+
+                    <div class="p-2">
+                        <div class="fw-bold small mb-1">
+                            ${escapeHTML(bookName(book))}
+                        </div>
+
+                        <div class="text-secondary small">
+                            ${escapeHTML(book.author || "نویسنده نامشخص")}
+                        </div>
+
+                        ${reservation
+                            ? `<span class="tag mt-2">رزرو شده</span>`
+                            : ""}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+/* =========================================================
+   11. جزئیات کتاب
+   ========================================================= */
+
+function bookDetailView() {
+    const book = findBook(V.ip);
+
+    if (!book) {
+        return `<div class="alert alert-danger">کتاب پیدا نشد.</div>`;
+    }
+
+    const reservation = activeReservation(book.ip);
+    const isAdmin = U.role === "admin";
+
+    return `
+        <div class="mb-3">
+            <button class="btn btn-outline-secondary btn-sm"
+                    onclick="goBack()">
+                <i class="bi bi-arrow-right"></i>
+                بازگشت
+            </button>
+        </div>
+
+        <div class="card-modern p-3 p-lg-4">
+            <div class="book-images mb-4">
+                ${bookImages(book).map(image => `
+                    <img src="${image}" alt="">
+                `).join("")}
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                <h1 class="h4 fw-bold mb-0">
+                    ${escapeHTML(bookName(book))}
+                </h1>
+
+                ${reservation
+                    ? `<span class="tag">رزرو شده</span>`
+                    : ""}
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-2 mb-4">
+                <div class="col">
+                    <div class="info-box">
+                        موضوع
+                        <strong>${escapeHTML(book.subject || "-")}</strong>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="info-box">
+                        نویسنده
+                        <strong>${escapeHTML(book.author || "-")}</strong>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="info-box">
+                        تاریخ انتشار
+                        <strong>${escapeHTML(book.date || "-")}</strong>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="info-box">
+                        شماره کتاب
+                        <strong>${escapeHTML(book.ip || "-")}</strong>
+                    </div>
+                </div>
+
+                ${book.grade ? `
+                    <div class="col">
+                        <div class="info-box">
+                            پایه تحصیلی
+                            <strong>${escapeHTML(book.grade)}</strong>
+                        </div>
+                    </div>
+                ` : ""}
+            </div>
+
+            ${isAdmin
+                ? adminBookEditor(book)
+                : reservation
+                    ? `<div class="alert alert-danger mb-0">این کتاب در حال حاضر رزرو شده است.</div>`
+                    : `
+                        <button class="btn btn-success"
+                                onclick="reserveBook('${escapeHTML(book.ip)}')">
+                            <i class="bi bi-bookmark-check"></i>
+                            رزرو کتاب
+                        </button>
+                    `}
+
+            ${isAdmin ? "" : recommendationForm(book)}
+            ${recommendationsForBookHTML(book)}
+        </div>
+    `;
+}
+
+function adminBookEditor(book) {
+    return `
+        <hr>
+
+        <h2 class="h6 fw-bold mb-3">
+            <i class="bi bi-pencil-square"></i>
+            ویرایش کتاب
+        </h2>
+
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input id="editBookName"
+                       class="form-control"
+                       value="${escapeHTML(bookName(book))}">
+            </div>
+
+            <div class="col-md-auto">
+                <button class="btn btn-primary"
+                        onclick="editBookName('${escapeHTML(book.ip)}')">
+                    ذخیره نام
+                </button>
+            </div>
+
+            <div class="col-md-6">
+                <input id="editBookImage"
+                       type="file"
+                       accept="image/*"
+                       class="form-control"
+                       onchange="editBookImage('${escapeHTML(book.ip)}')">
+            </div>
+
+            <div class="col-md-auto">
+                <button class="btn btn-outline-secondary"
+                        onclick="resetBookOverride('${escapeHTML(book.ip)}')">
+                    بازنشانی
+                </button>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-outline-danger"
+                        onclick="deleteBook('${escapeHTML(book.ip)}')">
+                    <i class="bi bi-trash"></i>
+                    حذف کتاب
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function editBookName(ip) {
+    const value = $("#editBookName")?.value.trim();
+
+    if (!value) return;
+
+    S.over[ip] = S.over[ip] || {};
+    S.over[ip].name = value;
+
+    saveState();
+    render();
+}
+
+function editBookImage(ip) {
+    const file = $("#editBookImage")?.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = event => {
+        const image = new Image();
+
+        image.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = 300;
+            canvas.height = 400;
+
+            canvas.getContext("2d")
+                .drawImage(image, 0, 0, 300, 400);
+
+            S.over[ip] = S.over[ip] || {};
+            S.over[ip].img = canvas.toDataURL("image/jpeg", .7);
+
+            saveState();
+            render();
+        };
+
+        image.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
+
+function resetBookOverride(ip) {
+    delete S.over[ip];
+    saveState();
+    render();
+}
+
+function deleteBook(ip) {
+    if (!confirm("این کتاب حذف شود؟")) return;
+
+    S.books = S.books.filter(book => String(book.ip) !== String(ip));
+    saveState();
+    navigateRoot("home");
+}
+
+
+/* =========================================================
+   12. معرفی کتاب توسط دانش‌آموزان
+   ========================================================= */
+
+function bookRecommendations(ip) {
+    if (!Array.isArray(S.recs)) S.recs = [];
+    return S.recs
+        .filter(item => String(item.book) === String(ip))
+        .sort((a, b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+}
+
+function recommendationsView() {
+    if (!Array.isArray(S.recs)) S.recs = [];
+
+    const recs = S.recs
+        .slice()
+        .sort((a, b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+
+    if (!recs.length) {
+        return `
+            <div class="page-title">معرفی‌های دانش‌آموزان</div>
+            <div class="page-description">هنوز معرفی کتابی ثبت نشده است.</div>
+            <div class="card-modern p-4 text-center">
+                <i class="bi bi-chat-quote fs-1 text-primary"></i>
+                <h2 class="h5 fw-bold mt-3">اولین معرفی را شما ثبت کنید!</h2>
+                <p class="text-secondary mb-0">
+                    وارد جزئیات یک کتاب شوید و تجربه‌تان را با دوستانتان به اشتراک بگذارید.
+                </p>
+            </div>
+        `;
+    }
+
+    return `
+        <div class="page-title">معرفی‌های دانش‌آموزان</div>
+        <div class="page-description">
+            نظر و پیشنهاد همکلاسی‌ها درباره کتاب‌های مختلف
+        </div>
+
+        <div class="row g-3">
+            ${recs.map(rec => {
+                const book = findBook(rec.book);
+                if (!book) return "";
+
+                return `
+                    <div class="col-12">
+                        <div class="card-modern p-3">
+                            <div class="d-flex justify-content-between align-items-start gap-3">
+                                <div class="flex-grow-1">
+                                    <button class="btn btn-link p-0 text-decoration-none fw-bold"
+                                            onclick="navigate('book',{ip:'${escapeHTML(book.ip)}'})">
+                                        ${escapeHTML(bookName(book))}
+                                    </button>
+                                    <div class="small text-secondary mt-1">
+                                        معرفی از طرف ${escapeHTML(rec.fromName || "دانش‌آموز")}
+                                        ${rec.createdAt ? ` • ${escapeHTML(dateFa(rec.createdAt))}` : ""}
+                                    </div>
+                                </div>
+                                <i class="bi bi-chat-quote text-primary fs-4"></i>
+                            </div>
+
+                            <div class="mt-3 p-3 rounded-3 bg-light">
+                                ${escapeHTML(rec.text).replace(/\n/g, "<br>")}
+                            </div>
+
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-outline-primary"
+                                        onclick="navigate('book',{ip:'${escapeHTML(book.ip)}'})">
+                                    مشاهده کتاب
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join("")}
+        </div>
+    `;
+}
+
+function recommendationForm(book) {
+    if (U.role !== "student") return "";
+
+    const existing = bookRecommendations(book.ip)
+        .find(item => String(item.fromCode) === String(U.code));
+
+    return `
+        <hr class="my-4">
+
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-chat-quote text-primary"></i>
+            <h2 class="h6 fw-bold mb-0">معرفی این کتاب به دیگر دانش‌آموزان</h2>
+        </div>
+
+        <p class="small text-secondary mb-3">
+            ${existing
+                ? "قبلاً این کتاب را معرفی کرده‌اید؛ می‌توانید متن معرفی خود را ویرایش کنید."
+                : "اگر این کتاب را خوانده‌اید، نظر خود را بنویسید تا دیگر دانش‌آموزان هم با آن آشنا شوند."}
+        </p>
+
+        <textarea id="bookRecommendationText"
+                  class="form-control mb-2"
+                  rows="4"
+                  maxlength="500"
+                  placeholder="مثلاً: این کتاب داستان جذابی دارد و پیشنهادش می‌کنم.">${existing ? escapeHTML(existing.text) : ""}</textarea>
+
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-primary"
+                    onclick="saveBookRecommendation('${escapeHTML(book.ip)}')">
+                <i class="bi bi-send"></i>
+                ${existing ? "ویرایش معرفی" : "ثبت معرفی"}
+            </button>
+
+            ${existing ? `
+                <button class="btn btn-outline-danger"
+                        onclick="deleteBookRecommendation('${escapeHTML(existing.id)}')">
+                    حذف معرفی من
+                </button>
+            ` : ""}
+        </div>
+    `;
+}
+
+function saveBookRecommendation(ip) {
+    if (U.role !== "student") return;
+
+    const book = findBook(ip);
+    const text = $("#bookRecommendationText")?.value.trim();
+
+    if (!book) {
+        alert("کتاب پیدا نشد.");
+        return;
+    }
+
+    if (!text) {
+        alert("لطفاً متن معرفی کتاب را بنویسید.");
+        return;
+    }
+
+    if (!Array.isArray(S.recs)) S.recs = [];
+
+    const existing = S.recs.find(item =>
+        String(item.book) === String(ip) &&
+        String(item.fromCode) === String(U.code)
+    );
+
+    const student = findStudent(U.code);
+
+    if (existing) {
+        existing.text = text;
+        existing.fromName = student?.name || U.name || "دانش‌آموز";
+        existing.updatedAt = Date.now();
+    } else {
+        S.recs.push({
+            id: createId("rec"),
+            book: String(ip),
+            fromCode: String(U.code),
+            fromName: student?.name || U.name || "دانش‌آموز",
+            text,
+            createdAt: Date.now()
+        });
+    }
+
+    saveState();
+    alert(existing ? "معرفی کتاب با موفقیت ویرایش شد." : "معرفی کتاب برای دیگر دانش‌آموزان ثبت شد.");
+    render();
+}
+
+function deleteBookRecommendation(id) {
+    if (U.role !== "student") return;
+
+    if (!confirm("معرفی این کتاب حذف شود؟")) return;
+
+    S.recs = (S.recs || []).filter(item =>
+        !(String(item.id) === String(id) &&
+          String(item.fromCode) === String(U.code))
+    );
+
+    saveState();
+    render();
+}
+
+function recommendationsForBookHTML(book) {
+    const recs = bookRecommendations(book.ip);
+
+    if (!recs.length) {
+        return `
+            <div class="mt-3 p-3 rounded-3 bg-light text-secondary small">
+                هنوز دانش‌آموزی این کتاب را معرفی نکرده است.
+            </div>
+        `;
+    }
+
+    return `
+        <div class="mt-3">
+            <div class="fw-bold small mb-2">
+                <i class="bi bi-chat-quote"></i>
+                معرفی‌های ثبت‌شده (${recs.length})
+            </div>
+
+            <div class="d-grid gap-2">
+                ${recs.slice(0, 3).map(rec => `
+                    <div class="p-3 rounded-3 bg-light">
+                        <div class="small fw-bold">
+                            ${escapeHTML(rec.fromName || "دانش‌آموز")}
+                            ${rec.createdAt ? `<span class="text-secondary fw-normal"> • ${escapeHTML(dateFa(rec.createdAt))}</span>` : ""}
+                        </div>
+                        <div class="small mt-2">
+                            ${escapeHTML(rec.text).replace(/\n/g, "<br>")}
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
+
+            ${recs.length > 3 ? `
+                <button class="btn btn-sm btn-link px-0 mt-2"
+                        onclick="navigate('recommendations')">
+                    مشاهده همه معرفی‌ها
+                </button>
+            ` : ""}
+        </div>
+    `;
+}
+
+/* =========================================================
+   12. امانت
+   ========================================================= */
+
+function reserveBook(ip) {
+    if (activeReservation(ip)) {
+        alert("این کتاب قبلاً رزرو شده است.");
+        return;
+    }
+
+    const book = findBook(ip);
+    if (!book) return;
+
+    S.res.push({
+        id: createId("reservation"),
+        book: ip,
+        name: bookName(book),
+        student: U.code,
+        at: Date.now(),
+        due: Date.now() + S.days * DAY,
+        done: false,
+        rating: 0
+    });
+
+    saveState();
+
+    navigate("success", {
+        name: bookName(book)
+    });
+}
+
+function successView() {
+    return `
+        <div class="card-modern text-center p-5">
+            <div class="display-3 text-success mb-3">
+                <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+            <h2 class="h4 fw-bold text-success">
+                کتاب با موفقیت رزرو شد
+            </h2>
+
+            <p class="text-secondary">
+                «${escapeHTML(V.name)}»
+                برای شما رزرو شد.
+                مهلت امانت ${S.days} روز است.
+            </p>
+
+            <button class="btn btn-primary"
+                    onclick="navigateRoot('home')">
+                بازگشت به کتابخانه
+            </button>
+        </div>
+    `;
+}
+
+/* =========================================================
+   13. کتاب‌های من
+   ========================================================= */
+
+function myBooksView() {
+    const mine = S.res
+        .filter(item => item.student === U.code)
+        .reverse();
+
+    const student = findStudent(U.code);
+
+    let html = `
+        <div class="page-title">کتاب‌های من</div>
+        <div class="page-description">
+            امتیاز شما:
+            <strong>${student?.pts || 0}</strong>
+        </div>
+    `;
+
+    if (!mine.length) {
+        return html + `
+            <div class="card-modern empty-state">
+                هنوز کتابی رزرو نکرده‌اید.
+            </div>
+        `;
+    }
+
+    html += mine.map(reservation => {
+        const expired = reservationExpired(reservation);
+
+        return `
+            <div class="card-modern p-3 mb-3">
+                <div class="d-flex justify-content-between gap-3 flex-wrap">
+                    <div>
+                        <strong>${escapeHTML(reservation.name)}</strong>
+                        <div class="text-secondary small mt-1">
+                            مهلت:
+                            ${dateFa(reservation.due)}
+                        </div>
+                    </div>
+
+                    <div>
+                        ${reservation.done
+                            ? `<span class="badge text-bg-success">تحویل داده شد</span>`
+                            : expired
+                                ? `<span class="badge text-bg-danger">زمان تمام شده</span>`
+                                : `<span class="badge text-bg-primary">در حال امانت</span>`}
+                    </div>
+                </div>
+
+                ${(expired || reservation.done) ? `
+                    <div class="mt-3">
+                        <span class="small fw-bold">امتیاز به کتاب:</span>
+                        ${[1,2,3,4,5].map(n => `
+                            <button class="star"
+                                    onclick="rateBook('${reservation.id}',${n})">
+                                ${n <= reservation.rating ? "★" : "☆"}
+                            </button>
+                        `).join("")}
+                    </div>
+                ` : ""}
+            </div>
+        `;
+    }).join("");
+
+    return html;
+}
+
+function rateBook(id, rating) {
+    const reservation = S.res.find(item => item.id === id);
+
+    if (!reservation) return;
+
+    reservation.rating = rating;
+    saveState();
+    render();
+}
+
+/* =========================================================
+   14. رتبه‌بندی
+   ========================================================= */
+
+function rankingView() {
+    const students = [...S.students]
+        .sort((a, b) => b.pts - a.pts)
+        .slice(0, 20);
+
+    return `
+        <div class="page-title">رتبه‌بندی</div>
+        <div class="page-description">
+            دانش‌آموزان فعال کتابخانه
+        </div>
+
+        <div class="card-modern p-4">
+            <h2 class="h6 fw-bold mb-3">
+                <i class="bi bi-trophy text-warning"></i>
+                برترین امتیازها
+            </h2>
+
+            ${students.length
+                ? students.map((student, index) => `
+                    <div class="d-flex justify-content-between border-bottom py-2">
+                        <span>
+                            ${index + 1}. ${escapeHTML(student.name)}
+                        </span>
+                        <strong>${student.pts} امتیاز</strong>
+                    </div>
+                `).join("")
+                : `<div class="text-secondary">هنوز دانش‌آموزی ثبت نشده است.</div>`}
+        </div>
+    `;
+}
+
+/* =========================================================
+   15. پنل مدیر: رزروها
+   ========================================================= */
+
+function reservationsView() {
+    return `
+        <div class="page-title">رزروها</div>
+        <div class="page-description">
+            مدیریت امانت و تحویل کتاب‌ها
+        </div>
+
+        <div class="card-modern p-3 table-wrap">
+            <table class="table table-hover align-middle table-modern">
+                <thead>
+                    <tr>
+                        <th>کتاب</th>
+                        <th>دانش‌آموز</th>
+                        <th>مهلت</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${S.res.slice().reverse().map(reservation => `
+                        <tr>
+                            <td>${escapeHTML(reservation.name)}</td>
+                            <td>
+                                ${escapeHTML(
+                                    findStudent(reservation.student)?.name || "-"
+                                )}
+                            </td>
+                            <td>${dateFa(reservation.due)}</td>
+                            <td>
+                                ${reservation.done
+                                    ? "تحویل داده شد"
+                                    : reservationExpired(reservation)
+                                        ? "زمان تمام"
+                                        : "در امانت"}
+                            </td>
+                            <td>
+                                ${reservation.done
+                                    ? "-"
+                                    : `
+                                        <button class="btn btn-sm btn-success"
+                                                onclick="deliverBook('${reservation.id}')">
+                                            تحویل شد
+                                        </button>
+                                    `}
+                            </td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+
+            ${!S.res.length
+                ? `<div class="empty-state">رزروی ثبت نشده است.</div>`
+                : ""}
+        </div>
+    `;
+}
+
+function deliverBook(id) {
+    const reservation = S.res.find(item => item.id === id);
+
+    if (!reservation) return;
+
+    reservation.done = true;
+    reservation.doneAt = Date.now();
+
+    const student = findStudent(reservation.student);
+
+    if (student) {
+        student.pts = (student.pts || 0) + 1;
+    }
+
+    saveState();
+    render();
+}
+
+/* =========================================================
+   16. پنل مدیر: Excel کتاب‌ها
+   ========================================================= */
+
+function excelView() {
+    const subjects = [...new Set(
+        S.books
+            .map(book => book.subject)
+            .filter(Boolean)
+    )];
+
+    return `
+        <div class="page-title">مدیریت کتاب‌ها با Excel</div>
+        <div class="page-description">
+            فایل Excel را بارگذاری کنید تا تمام کتاب‌ها و دسته‌بندی‌های آن
+            به‌صورت خودکار در سایت ساخته و نمایش داده شوند.
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-lg-3">
+                <div class="card-modern p-3">
+                    <div class="text-secondary small">تعداد کتاب‌ها</div>
+                    <div class="stat-number">${S.books.length}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="card-modern p-3">
+                    <div class="text-secondary small">دسته‌بندی‌ها</div>
+                    <div class="stat-number">${subjects.length}</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="card-modern p-3">
+                    <div class="text-secondary small">پایه‌ها</div>
+                    <div class="stat-number">
+                        ${new Set(S.books.map(book => book.grade).filter(Boolean)).size}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-modern p-3 p-lg-4 mb-4">
+            <div class="upload-zone">
+                <div class="text-center mb-4">
+                    <i class="bi bi-file-earmark-spreadsheet display-5 text-success"></i>
+
+                    <h2 class="h5 fw-bold mt-3">
+                        بارگذاری فایل Excel کتابخانه
+                    </h2>
+
+                    <p class="text-secondary small mb-0">
+                        ستون‌های فایل شما به‌صورت خودکار شناسایی می‌شوند.
+                    </p>
+                </div>
+
+                <input id="booksExcel"
+                       type="file"
+                       accept=".xlsx,.xls"
+                       class="form-control mb-3">
+
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-primary"
+                            onclick="importBooks(false)">
+                        <i class="bi bi-arrow-repeat"></i>
+                        جایگزینی کل کتاب‌ها
+                    </button>
+
+                    <button class="btn btn-success"
+                            onclick="importBooks(true)">
+                        <i class="bi bi-plus-circle"></i>
+                        افزودن به کتاب‌های فعلی
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-modern p-3 mb-4">
+            <h2 class="h6 fw-bold">
+                <i class="bi bi-info-circle text-primary"></i>
+                ساختار خواندن Excel
+            </h2>
+
+            <p class="small text-secondary mb-2">
+                فایل فعلی شما با ستون‌های
+                <strong>نام کتاب، موضوع، نام نویسنده، تاریخ انتشار،
+                پایه تحصیلی و IP</strong>
+                قابل خواندن است.
+            </p>
+
+            <p class="small text-secondary mb-0">
+                دسته‌بندی‌ها از مقدار واقعی ستون «موضوع» ساخته می‌شوند؛
+                بنابراین اگر در Excel دسته‌بندی جدیدی اضافه کنید،
+                نیازی به اضافه کردن دستی آن در کد نیست.
+            </p>
+        </div>
+
+        <div class="card-modern p-3 table-wrap">
+            <h2 class="h6 fw-bold mb-3">پیش‌نمایش کتاب‌های ثبت‌شده</h2>
+
+            <table class="table table-hover align-middle table-modern">
+                <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>نام کتاب</th>
+                        <th>موضوع</th>
+                        <th>نویسنده</th>
+                        <th>تاریخ انتشار</th>
+                        <th>پایه</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${S.books.slice(0, 100).map(book => `
+                        <tr>
+                            <td>${escapeHTML(book.ip)}</td>
+                            <td>${escapeHTML(bookName(book))}</td>
+                            <td>${escapeHTML(book.subject || "-")}</td>
+                            <td>${escapeHTML(book.author || "-")}</td>
+                            <td>${escapeHTML(book.date || "-")}</td>
+                            <td>${escapeHTML(book.grade || "-")}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+
+            ${S.books.length > 100
+                ? `<div class="small text-secondary">
+                    فقط ۱۰۰ کتاب اول برای پیش‌نمایش نمایش داده شده است.
+                   </div>`
+                : ""}
+        </div>
+    `;
+}
+
+/* =========================================================
+   17. پنل مدیر: کاربران
+   ========================================================= */
+
+function studentsView() {
+    return `
+        <div class="page-title">کاربران</div>
+        <div class="page-description">
+            مدیریت دانش‌آموزان
+        </div>
+
+        <div class="card-modern p-3 mb-3">
+            <div class="row g-2">
+                <div class="col-md-5">
+                    <input id="newStudentName"
+                           class="form-control"
+                           placeholder="نام دانش‌آموز">
+                </div>
+
+                <div class="col-md-3">
+                    <select id="newStudentGrade" class="form-select">
+                        ${GRADES.map(grade => `
+                            <option>${grade}</option>
+                        `).join("")}
+                    </select>
+                </div>
+
+                <div class="col-md-auto">
+                    <button class="btn btn-success"
+                            onclick="addStudent()">
+                        <i class="bi bi-plus-lg"></i>
+                        افزودن
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-modern p-3 table-wrap">
+            <table class="table table-hover align-middle table-modern">
+                <thead>
+                    <tr>
+                        <th>نام</th>
+                        <th>پایه</th>
+                        <th>کد ورود</th>
+                        <th>امتیاز</th>
+                        <th>رمز</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${S.students.map(student => `
+                        <tr>
+                            <td>${escapeHTML(student.name)}</td>
+                            <td>${escapeHTML(student.grade)}</td>
+                            <td><strong>${escapeHTML(student.code)}</strong></td>
+                            <td>${student.pts || 0}</td>
+                            <td><span class="badge text-bg-light">تنظیم شده</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1"
+                                        onclick="changeStudentPassword('${escapeHTML(student.code)}')">
+                                    <i class="bi bi-key"></i>
+                                    تغییر رمز
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger"
+                                        onclick="deleteStudent('${escapeHTML(student.code)}')">
+                                    <i class="bi bi-trash"></i>
+                                    حذف
+                                </button>
+                            </td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+
+            ${!S.students.length
+                ? `<div class="empty-state">دانش‌آموزی ثبت نشده است.</div>`
+                : ""}
+        </div>
+    `;
+}
+
+function generateStudentCode() {
+    let code;
+
+    do {
+        code = String(
+            Math.floor(1000 + Math.random() * 9000)
+        );
+    } while (findStudent(code));
+
+    return code;
+}
+
+function addStudent() {
+    const name = $("#newStudentName")?.value.trim();
+    const grade = $("#newStudentGrade")?.value;
+
+    if (!name) {
+        alert("نام دانش‌آموز را وارد کنید.");
+        return;
+    }
+
+    S.students.push({
+        code: generateStudentCode(),
+        name,
+        grade,
+        password: "",
+        pts: 0
+    });
+
+    saveState();
+    render();
+}
+
+function changeStudentPassword(code) {
+    if (U?.role !== "admin") return;
+
+    const student = findStudent(code);
+    if (!student) return;
+
+    const password = prompt(
+        `رمز جدید برای «${student.name}» را وارد کنید:`,
+        student.password || student.code
+    );
+    if (password === null) return;
+
+    const newPassword = password.trim();
+    if (!newPassword) {
+        alert("رمز عبور نمی‌تواند خالی باشد.");
+        return;
+    }
+
+    student.password = newPassword;
+    saveState();
+    alert(`رمز عبور «${student.name}» با موفقیت تغییر کرد.`);
+    render();
+}
+
+function deleteStudent(code) {
+    if (!confirm("این دانش‌آموز حذف شود؟")) return;
+
+    S.students = S.students.filter(student => student.code !== code);
+    saveState();
+    render();
+}
+
+/* =========================================================
+   18. تنظیمات
+   ========================================================= */
+
+function settingsView() {
+    return `
+        <div class="page-title">تنظیمات</div>
+        <div class="page-description">
+            تنظیم مدت امانت، رمز مدیر و پشتیبان اطلاعات
+        </div>
+
+        <div class="card-modern p-4 mb-3">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">
+                        مدت امانت (روز)
+                    </label>
+
+                    <input id="loanDays"
+                           type="number"
+                           min="1"
+                           class="form-control"
+                           value="${S.days}">
+                </div>
+
+                <div class="col-md-auto">
+                    <button class="btn btn-primary"
+                            onclick="saveLoanDays()">
+                        ذخیره
+                    </button>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">
+                        رمز مدیر
+                    </label>
+
+                    <input id="adminPassword"
+                           class="form-control"
+                           value="${escapeHTML(S.pw)}">
+                </div>
+
+                <div class="col-md-auto">
+                    <button class="btn btn-primary"
+                            onclick="saveAdminPassword()">
+                        تغییر رمز
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-modern p-4">
+            <h2 class="h6 fw-bold">پشتیبان‌گیری</h2>
+
+            <p class="small text-secondary">
+                اطلاعات این سامانه در LocalStorage همین مرورگر ذخیره می‌شود.
+                برای انتقال اطلاعات به دستگاه دیگر، پشتیبان تهیه کنید.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-outline-primary"
+                        onclick="downloadBackup()">
+                    <i class="bi bi-download"></i>
+                    دریافت پشتیبان
+                </button>
+
+                <input id="backupFile"
+                       type="file"
+                       accept=".json"
+                       class="form-control"
+                       style="max-width:320px">
+
+                <button class="btn btn-outline-secondary"
+                        onclick="restoreBackup()">
+                    بازیابی پشتیبان
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function saveLoanDays() {
+    S.days = Math.max(
+        1,
+        Number($("#loanDays")?.value) || 7
+    );
+
+    saveState();
+    alert("مدت امانت ذخیره شد.");
+}
+
+function saveAdminPassword() {
+    const password = $("#adminPassword")?.value;
+
+    if (!password) return;
+
+    S.pw = password;
+    saveState();
+    alert("رمز مدیر تغییر کرد.");
+}
+
+function downloadBackup() {
+    const blob = new Blob(
+        [JSON.stringify(S, null, 2)],
+        { type: "application/json;charset=utf-8" }
+    );
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "school-library-backup.json";
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+}
+
+function restoreBackup() {
+    const file = $("#backupFile")?.files?.[0];
+
+    if (!file) {
+        alert("فایل پشتیبان را انتخاب کنید.");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = event => {
+        try {
+            const data = JSON.parse(event.target.result);
+
+            if (!data.cats || !data.books) {
+                throw new Error("Invalid backup");
+            }
+
+            if (!confirm("اطلاعات فعلی با پشتیبان جایگزین شود؟")) {
+                return;
+            }
+
+            S = data;
+            saveState();
+            alert("پشتیبان با موفقیت بازیابی شد.");
+            render();
+        } catch {
+            alert("فایل پشتیبان معتبر نیست.");
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+/* =========================================================
+   19. شروع برنامه
+   ========================================================= */
+
+render();
+</script>
+
+<!-- Bootstrap JS -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+</body>
+</html>
