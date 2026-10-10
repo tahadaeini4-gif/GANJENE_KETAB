@@ -8,7 +8,3334 @@
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css"
-        rel="stylesheet"
+        rel="stylesheet"<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>گنجینه ی کتاب</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<style>
+:root{
+--primary:#4f46e5;
+--primary-dark:#4338ca;
+--primary-soft:#eef2ff;
+--success:#059669;
+--danger:#e11d48;
+--warning:#ea580c;
+--bg:#f8fafc;
+--surface:#fff;
+--text:#1e293b;
+--muted:#64748b;
+--border:#e2e8f0;
+--shadow:0 8px 28px rgba(15,23,42,.06)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;
+min-height:100vh;
+background:var(--bg);
+color:var(--text);
+font-family:"Vazirmatn",Tahoma,sans-serif
+}
+button,input,select,textarea{font-family:inherit}
+.app-topbar{
+position:sticky;
+top:0;
+z-index:1030;
+height:75px;
+background:rgba(255,255,255,.97);
+backdrop-filter:blur(14px);
+border-bottom:1px solid var(--border);
+box-shadow:0 3px 18px rgba(15,23,42,.05)
+}
+.brand{color:var(--primary);font-weight:900;font-size:21px}
+.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px;font-weight:500}
+.app-layout{min-height:calc(100vh - 75px)}
+.sidebar{
+width:245px;
+flex:0 0 245px;
+background:#fff;
+border-left:1px solid var(--border);
+padding:22px 14px
+}
+.sidebar-title{color:#94a3b8;font-size:12px;margin:5px 12px 12px}
+.menu-btn{
+width:100%;
+border:0;
+background:transparent;
+color:var(--muted);
+padding:12px 14px;
+border-radius:12px;
+text-align:right;
+margin-bottom:5px;
+cursor:pointer;
+transition:.2s
+}
+.menu-btn:hover{background:#eef2ff;color:var(--primary)}
+.menu-btn.active{
+background:linear-gradient(135deg,#6366f1,#4f46e5);
+color:#fff;
+box-shadow:0 8px 20px rgba(79,70,229,.22)
+}
+.content{min-width:0;flex:1;padding:28px}
+.page-title{font-size:1.65rem;font-weight:800;margin-bottom:5px}
+.page-description{color:var(--muted);margin-bottom:1.5rem}
+.card-modern{
+background:#fff;
+border:1px solid var(--border);
+border-radius:18px;
+box-shadow:var(--shadow)
+}
+.form-control,.form-select{
+background:#fff!important;
+color:var(--text)!important;
+border:1px solid #dbe2ea!important;
+border-radius:11px!important;
+min-height:45px
+}
+.form-control:focus,.form-select:focus{
+border-color:#818cf8!important;
+box-shadow:0 0 0 3px rgba(99,102,241,.1)!important
+}
+.btn{border-radius:11px;transition:.2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{
+border:0;
+background:linear-gradient(135deg,#6366f1,#4f46e5);
+box-shadow:0 5px 15px rgba(79,70,229,.18)
+}
+.btn-success{
+border:0;
+background:linear-gradient(135deg,#34d399,#059669)
+}
+.login-page{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:25px;
+background:
+radial-gradient(circle at 10% 20%,rgba(99,102,241,.1),transparent 28%),
+radial-gradient(circle at 90% 80%,rgba(236,72,153,.08),transparent 28%),
+#fff
+}
+.login-box{
+width:100%;
+max-width:950px;
+padding:35px;
+border-radius:28px;
+background:#fff;
+border:1px solid var(--border);
+box-shadow:0 20px 60px rgba(79,70,229,.1)
+}
+.role-card{
+height:100%;
+cursor:pointer;
+border:1px solid var(--border);
+border-radius:22px;
+background:#fff;
+padding:30px 20px;
+text-align:center;
+transition:.25s
+}
+.role-card:hover{
+transform:translateY(-5px);
+border-color:#a5b4fc;
+box-shadow:var(--shadow)
+}
+.role-icon{
+width:75px;
+height:75px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 18px;
+font-size:34px
+}
+.category-card{
+height:100%;
+cursor:pointer;
+position:relative;
+overflow:hidden;
+border-radius:22px;
+padding:25px!important;
+background:linear-gradient(160deg,var(--soft,#eef2ff),#fff 65%);
+border:1.5px solid rgba(var(--rgb,79,70,229),.28);
+box-shadow:0 14px 30px -12px rgba(var(--rgb,79,70,229),.25);
+transition:.25s
+}
+.category-card:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 40px -15px rgba(var(--rgb,79,70,229),.4)
+}
+.category-icon{
+width:58px;
+height:58px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+border-radius:17px;
+color:#fff;
+background:linear-gradient(145deg,var(--c1,#818cf8),var(--c2,#4f46e5));
+font-size:25px
+}
+.row>.col:nth-child(6n+1){--c1:#3b82f6;--c2:#1d4ed8;--soft:#dbeafe;--rgb:29,78,216}
+.row>.col:nth-child(6n+2){--c1:#10b981;--c2:#047857;--soft:#d1fae5;--rgb:4,120,87}
+.row>.col:nth-child(6n+3){--c1:#f97316;--c2:#c2410c;--soft:#ffedd5;--rgb:194,65,12}
+.row>.col:nth-child(6n+4){--c1:#8b5cf6;--c2:#6d28d9;--soft:#ede9fe;--rgb:109,40,217}
+.row>.col:nth-child(6n+5){--c1:#ec4899;--c2:#be185d;--soft:#fce7f3;--rgb:190,24,93}
+.row>.col:nth-child(6n){--c1:#14b8a6;--c2:#0f766e;--soft:#ccfbf1;--rgb:15,118,110}
+.book-card{
+height:100%;
+cursor:pointer;
+padding:8px!important;
+border-radius:20px;
+overflow:hidden;
+transition:.25s
+}
+.book-card:hover{
+transform:translateY(-5px);
+border-color:#a5b4fc;
+box-shadow:0 18px 35px rgba(79,70,229,.15)
+}
+.book-cover{
+width:100%;
+aspect-ratio:3/4;
+object-fit:cover;
+border-radius:15px;
+background:#f1f5f9
+}
+.book-images{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding-bottom:8px
+}
+.book-images img{
+height:240px;
+border-radius:14px;
+border:1px solid var(--border)
+}
+.tag{
+display:inline-block;
+background:#fff1f2;
+color:var(--danger);
+border:1px solid #fecdd3;
+border-radius:8px;
+font-size:.72rem;
+padding:3px 8px
+}
+.search-box{max-width:650px}
+.upload-zone{
+border:2px dashed #c7d2fe;
+background:#fafbff;
+border-radius:18px;
+padding:28px
+}
+.table-wrap{overflow-x:auto}
+.table-modern{min-width:760px}
+.table-modern th{white-space:nowrap;color:var(--muted)}
+.info-box{
+background:#f8fafc;
+border:1px solid var(--border);
+border-radius:13px;
+padding:11px;
+color:var(--muted);
+height:100%
+}
+.info-box strong{display:block;color:var(--text);margin-top:3px}
+.stat-number{font-size:1.55rem;font-weight:900;color:var(--primary)}
+.empty-state{text-align:center;padding:50px 20px;color:#94a3b8}
+.star{
+border:0;
+background:transparent;
+color:#f59e0b;
+font-size:1.5rem;
+padding:0 2px;
+cursor:pointer
+}
+.score-card{
+background:linear-gradient(135deg,#eef2ff,#fff);
+border:1px solid #c7d2fe;
+border-radius:20px;
+padding:22px
+}
+.level-badge{
+display:inline-flex;
+align-items:center;
+gap:6px;
+padding:7px 13px;
+border-radius:30px;
+background:#ede9fe;
+color:#6d28d9;
+font-weight:800
+}
+.progress{height:12px;border-radius:20px;background:#e2e8f0}
+.progress-bar{
+border-radius:20px;
+background:linear-gradient(90deg,#6366f1,#ec4899)
+}
+.score-history-item{border-bottom:1px solid #eef2f7;padding:13px 0}
+.score-history-item:last-child{border-bottom:0}
+.score-positive{color:#059669;font-weight:900}
+.recommend-card{
+border:1px solid #ddd6fe;
+background:linear-gradient(135deg,#faf5ff,#fff)
+}
+.notification-card{
+border:1px solid #bfdbfe;
+background:linear-gradient(135deg,#eff6ff,#fff)
+}
+.student-name-link{
+border:0;
+background:transparent;
+color:var(--primary);
+font-weight:800;
+padding:0;
+cursor:pointer
+}
+.student-name-link:hover{text-decoration:underline}
+.read-card{
+border:1px solid #bbf7d0;
+background:linear-gradient(135deg,#f0fdf4,#fff)
+}
+.presentation-card{
+border:1px solid #fed7aa;
+background:linear-gradient(135deg,#fff7ed,#fff)
+}
+@media(max-width:900px){
+.app-layout{flex-direction:column}
+.sidebar{
+width:100%;
+flex-basis:auto;
+border-left:0;
+border-bottom:1px solid var(--border);
+padding:10px;
+overflow-x:auto
+}
+.sidebar-title{display:none}
+.sidebar nav{display:flex;gap:5px}
+.menu-btn{width:auto;white-space:nowrap;margin:0}
+.content{padding:17px}
+}
+@media(max-width:576px){
+.app-topbar{padding:0 12px}
+.brand{font-size:17px}
+.login-box{padding:22px}
+.page-title{font-size:1.35rem}
+.content{padding:14px}
+}
+</style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script>
+const API_URL="https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnTKMNtLPAP36wVXXaYSUkp8qFSU8_fiwmDsPukkLdbW6ChYTMpFICRvSZm27BFN2idkLDuJJwc3zlB2xOMCE3z7LWFE1sZGqSdTGpXdyCDd3Qxow5vsZmSzWUe5ibniVBkRt1eI29MqxIPM6ylK0zBKNfTO4sLkzlOKGH5y0jaxNH476aYc4bCTE5i7kto5OdbeSsSbmOdizhXjIn3iSicrahA2tU7u7QGZdUeRRiGeBJxhdpeowy_EEzcIPELtrNzJ76eDescqDm2YvdZtO18xznuXAA&lib=MtOr2LjdMcx-9vO2n6kIUnqGpNDEPRDbC";
+
+const GRADES=["هفتم","هشتم","نهم"];
+
+const DEFAULT_SUBJECTS=[
+"علمی","زندگی‌نامه","کمک درسی","داستان و رمان","شعر و ادبیات",
+"تاریخ","جغرافیا","دینی و اخلاقی","هنر","ورزش",
+"کامپیوتر و فناوری","مهارت‌های زندگی","طنز و سرگرمی","مرجع و دایرةالمعارف"
+];
+
+const SUBJECT_ICONS={
+"علمی":"bi bi-beaker",
+"زندگی‌نامه":"bi bi-person-vcard",
+"کمک درسی":"bi bi-pencil-square",
+"داستان و رمان":"bi bi-book",
+"شعر و ادبیات":"bi bi-feather",
+"تاریخ":"bi bi-bank",
+"جغرافیا":"bi bi-globe2",
+"دینی و اخلاقی":"bi bi-moon-stars",
+"هنر":"bi bi-palette",
+"ورزش":"bi bi-trophy",
+"کامپیوتر و فناوری":"bi bi-pc-display",
+"مهارت‌های زندگی":"bi bi-compass",
+"طنز و سرگرمی":"bi bi-emoji-smile",
+"مرجع و دایرةالمعارف":"bi bi-journals"
+};
+
+const QUOTES=[
+"کتاب خوب، دوستی است که هرگز تو را ترک نمی‌کند.",
+"هر صفحه‌ای که می‌خوانی، پنجره‌ای تازه به دنیاست.",
+"خواندن، ورزش مغز است.",
+"هر کتاب، ماجرایی تازه برای ذهن توست.",
+"کتاب، کلید گنجینه‌ی دانایی است."
+];
+
+const DAY=86400000;
+
+function createDefaultState(){
+return{
+cats:DEFAULT_SUBJECTS.map((name,index)=>({id:`c${index}`,name})),
+students:[],
+books:[],
+res:[],
+over:{},
+recs:[],
+directRecs:[],
+scoreHistory:[],
+model:[],
+top:null,
+days:7,
+pw:"admin123",
+level2Threshold:10
+};
+}
+
+let S=createDefaultState();
+let U=null;
+let V={v:"login"};
+let HISTORY=[];
+let ROLE="";
+let SEARCH="";
+let CLOUD_READY=false;
+let CLOUD_SAVING=false;
+let CLOUD_LOADING=false;
+
+const $=selector=>document.querySelector(selector);
+
+function escapeHTML(value){
+return String(value??"").replace(/[&<>"']/g,char=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[char]));
+}
+
+function createId(prefix="id"){
+return`${prefix}-${Date.now()}-${Math.random().toString(36).slice(2,9)}`;
+}
+
+function generateStudentCode(){
+return"ST"+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,7).toUpperCase();
+}
+
+function dateFa(value){
+if(!value)return"-";
+try{return new Date(value).toLocaleDateString("fa-IR")}
+catch{return"-"}
+}
+
+function hashString(value){
+let hash=7;
+for(const char of String(value))hash=(hash*31+char.charCodeAt(0))>>>0;
+return hash;
+}
+
+function findStudent(code){
+return(S.students||[]).find(s=>String(s.code)===String(code));
+}
+
+function findBook(ip){
+return(S.books||[]).find(b=>String(b.ip)===String(ip));
+}
+
+function bookName(book){
+if(!book)return"";
+return S.over?.[book.ip]?.name||book.name||"";
+}
+
+function activeReservation(ip){
+return(S.res||[]).find(r=>String(r.book)===String(ip)&&!r.done);
+}
+
+function reservationExpired(r){
+return Date.now()>=Number(r.due||0);
+}
+
+function gradeFrom(value){
+const text=String(value??"").trim();
+return GRADES.find(g=>text.includes(g))||text;
+}
+
+function normalizeHeader(value){
+return String(value??"").replace(/\u200c/g," ").replace(/\s+/g," ").trim();
+}
+
+function normalizeState(data){
+const base=createDefaultState();
+const state=data&&typeof data==="object"?data:base;
+
+if(!Array.isArray(state.cats)||!state.cats.length)state.cats=base.cats;
+if(!Array.isArray(state.students))state.students=[];
+if(!Array.isArray(state.books))state.books=[];
+if(!Array.isArray(state.res))state.res=[];
+if(!state.over||typeof state.over!=="object")state.over={};
+if(!Array.isArray(state.recs))state.recs=[];
+if(!Array.isArray(state.directRecs))state.directRecs=[];
+if(!Array.isArray(state.scoreHistory))state.scoreHistory=[];
+if(!Array.isArray(state.model))state.model=[];
+if(!Number(state.days))state.days=7;
+if(!state.pw)state.pw="admin123";
+if(!Number(state.level2Threshold))state.level2Threshold=10;
+
+const usedCodes=new Set();
+
+state.students.forEach(student=>{
+let code=String(student.code||"").trim();
+
+if(!code||usedCodes.has(code)){
+code=generateStudentCode();
+while(usedCodes.has(code))code=generateStudentCode();
+}
+
+usedCodes.add(code);
+
+student.code=code;
+student.password=String(student.password||"");
+student.name=String(student.name||"");
+student.grade=String(student.grade||"");
+student.pts=Number(student.pts)||0;
+});
+
+state.res.forEach(r=>{
+r.id=String(r.id||createId("reservation"));
+r.book=String(r.book||"");
+r.student=String(r.student||"");
+r.rating=Number(r.rating)||0;
+r.done=!!r.done;
+r.read=!!(r.read||r.done);
+r.readAt=r.readAt||null;
+r.readAwarded=!!r.readAwarded;
+r.ratingAwarded=!!r.ratingAwarded;
+r.presentation=!!r.presentation;
+r.presentationAt=r.presentationAt||null;
+r.presentationAwarded=!!r.presentationAwarded;
+});
+
+state.directRecs.forEach(rec=>{
+rec.id=String(rec.id||createId("direct-rec"));
+rec.book=String(rec.book||"");
+rec.fromCode=String(rec.fromCode||"");
+rec.toCode=String(rec.toCode||"");
+rec.awarded=!!rec.awarded;
+});
+
+return state;
+}
+
+async function loadState(){
+try{
+const response=await fetch(API_URL+"?t="+Date.now(),{
+method:"GET",
+cache:"no-store"
+});
+
+if(!response.ok)throw new Error("GET "+response.status);
+
+const result=await response.json();
+
+if(!result||!result.state)throw new Error("state not found");
+
+CLOUD_READY=true;
+return normalizeState(result.state);
+}catch(error){
+CLOUD_READY=false;
+console.error(error);
+return normalizeState(createDefaultState());
+}
+}
+
+async function saveState(){
+if(CLOUD_SAVING)return false;
+
+try{
+CLOUD_SAVING=true;
+
+const payload=JSON.stringify(normalizeState(S));
+
+const response=await fetch(API_URL,{
+method:"POST",
+headers:{"Content-Type":"text/plain;charset=utf-8"},
+body:payload
+});
+
+if(!response.ok)throw new Error("POST "+response.status);
+
+const result=await response.json();
+
+if(result&&result.ok===false){
+throw new Error(result.error||"save failed");
+}
+
+CLOUD_READY=true;
+return true;
+}catch(error){
+CLOUD_READY=false;
+console.error(error);
+return false;
+}finally{
+CLOUD_SAVING=false;
+}
+}
+
+async function initializeApp(){
+S=normalizeState(createDefaultState());
+render();
+
+try{
+CLOUD_LOADING=true;
+const cloudState=await loadState();
+
+if(cloudState)S=normalizeState(cloudState);
+
+CLOUD_LOADING=false;
+render();
+}catch(error){
+CLOUD_LOADING=false;
+render();
+}
+}
+
+const SCORE_TYPES={
+read:{title:"خواندن کتاب",amount:1,icon:"bi-book"},
+rate:{title:"امتیاز دادن به کتاب",amount:.5,icon:"bi-star-fill"},
+presentation:{title:"ارائه کتاب",amount:2,icon:"bi-mic"},
+recommendation:{title:"معرفی کتاب و خوانده‌شدن توسط دوست",amount:3,icon:"bi-people"},
+recommendedRead:{title:"خواندن کتاب معرفی‌شده",amount:2,icon:"bi-bookmark-check"}
+};
+
+function addScore(studentCode,type,extra={}){
+const student=findStudent(studentCode);
+const config=SCORE_TYPES[type];
+
+if(!student||!config)return false;
+
+const uniqueKey=extra.uniqueKey||null;
+
+if(uniqueKey&&S.scoreHistory.some(x=>String(x.uniqueKey)===String(uniqueKey))){
+return false;
+}
+
+const event={
+id:createId("score"),
+student:String(studentCode),
+type,
+amount:Number(config.amount),
+book:extra.book?String(extra.book):"",
+relatedStudent:extra.relatedStudent?String(extra.relatedStudent):"",
+uniqueKey,
+createdAt:Date.now(),
+note:extra.note||""
+};
+
+S.scoreHistory.push(event);
+student.pts=Number(student.pts||0)+Number(config.amount);
+
+return true;
+}
+
+function studentScore(studentCode){
+return Number(findStudent(studentCode)?.pts||0);
+}
+
+function scoreBreakdown(studentCode){
+const result={read:0,rate:0,presentation:0,recommendation:0,recommendedRead:0};
+
+(S.scoreHistory||[])
+.filter(x=>String(x.student)===String(studentCode))
+.forEach(x=>{
+if(result[x.type]!==undefined)result[x.type]+=Number(x.amount||0);
+});
+
+return result;
+}
+
+function studentLevel(studentCode){
+return studentScore(studentCode)>=Number(S.level2Threshold||10)?2:1;
+}
+
+function levelProgress(studentCode){
+const score=studentScore(studentCode);
+const threshold=Number(S.level2Threshold||10);
+return score>=threshold?100:Math.min(100,(score/threshold)*100);
+}
+
+function formatScore(value){
+const n=Number(value||0);
+return Number.isInteger(n)
+?n.toLocaleString("fa-IR")
+:n.toLocaleString("fa-IR",{maximumFractionDigits:1});
+}
+
+function scoreLabel(type){
+return SCORE_TYPES[type]?.title||"فعالیت";
+}
+
+function navigate(view,params={}){
+HISTORY.push(V);
+V={v:view,...params};
+render();
+window.scrollTo(0,0);
+}
+
+function navigateRoot(view="home"){
+HISTORY=[];
+V={v:view};
+SEARCH="";
+render();
+window.scrollTo(0,0);
+}
+
+function goBack(){
+V=HISTORY.pop()||{v:"home"};
+render();
+}
+
+function categoryById(id){
+return(S.cats||[]).find(c=>c.id===id)||null;
+}
+
+function booksByCategory(id){
+const category=categoryById(id);
+if(!category)return[];
+return S.books.filter(book=>String(book.subject)===String(category.name));
+}
+
+function ensureCategory(subject){
+const clean=normalizeHeader(subject);
+if(!clean)return;
+
+if(!S.cats.some(c=>normalizeHeader(c.name)===clean)){
+S.cats.push({id:createId("cat"),name:clean});
+}
+}
+
+function renameCategory(id){
+const category=categoryById(id);
+if(!category)return;
+
+const name=prompt("نام جدید دسته‌بندی:",category.name);
+if(!name?.trim())return;
+
+const old=category.name;
+category.name=name.trim();
+
+S.books.forEach(book=>{
+if(book.subject===old)book.subject=category.name;
+});
+
+saveState();
+render();
+}
+
+function deleteCategory(id){
+const category=categoryById(id);
+if(!category)return;
+
+if(!confirm(`دسته «${category.name}» حذف شود؟ کتاب‌ها حذف نمی‌شوند.`))return;
+
+S.cats=S.cats.filter(c=>c.id!==id);
+saveState();
+render();
+}
+
+function addCategory(){
+const name=prompt("نام دسته‌بندی جدید:");
+if(!name?.trim())return;
+ensureCategory(name);
+saveState();
+render();
+}
+
+function createCover(title,hue,variation){
+const safeTitle=String(title).slice(0,42);
+
+const svg=`
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400">
+<rect width="300" height="400" fill="hsl(${hue},60%,45%)"/>
+<rect x="20" y="20" width="260" height="360" fill="none" stroke="#fff" stroke-width="3" opacity=".6"/>
+<circle cx="150" cy="130" r="${50+variation*15}" fill="hsl(${hue+40},70%,70%)" opacity=".8"/>
+<text x="150" y="260" font-size="22" fill="#fff" text-anchor="middle" font-family="Tahoma">${escapeHTML(safeTitle.slice(0,20))}</text>
+<text x="150" y="295" font-size="16" fill="#fff" text-anchor="middle" font-family="Tahoma">${escapeHTML(safeTitle.slice(20))}</text>
+</svg>`;
+
+return"data:image/svg+xml;utf8,"+encodeURIComponent(svg);
+}
+
+function bookImages(book){
+const hue=hashString(`${book.ip}${book.name}`)%360;
+const images=[0,1,2].map(v=>createCover(bookName(book),hue+v*20,v));
+
+if(S.over?.[book.ip]?.img)images[0]=S.over[book.ip].img;
+
+return images;
+}
+
+function readExcel(file,callback){
+if(!file){
+alert("ابتدا فایل Excel را انتخاب کنید.");
+return;
+}
+
+if(typeof XLSX==="undefined"){
+alert("کتابخانه Excel بارگذاری نشده است.");
+return;
+}
+
+const reader=new FileReader();
+
+reader.onload=e=>{
+try{
+const workbook=XLSX.read(e.target.result,{type:"array"});
+const allRows=[];
+
+workbook.SheetNames.forEach(sheet=>{
+const rows=XLSX.utils.sheet_to_json(workbook.Sheets[sheet],{
+header:1,
+defval:"",
+raw:false
+});
+
+rows.forEach(row=>{
+if(row.some(cell=>String(cell).trim()!==""))allRows.push(row);
+});
+});
+
+callback(allRows);
+}catch(error){
+console.error(error);
+alert("فایل Excel خوانده نشد.");
+}
+};
+
+reader.readAsArrayBuffer(file);
+}
+
+function findColumnIndexes(rows){
+const aliases={
+name:["نام کتاب","عنوان کتاب","نام"],
+subject:["موضوع","دسته بندی","دسته‌بندی","دسته"],
+author:["نام نویسنده","نویسنده","مولف","مؤلف"],
+date:["تاریخ انتشار","تاریخ"],
+grade:["پایه تحصیلی","پایه","مقطع"],
+ip:["ip","شماره کتاب","شماره"]
+};
+
+let headerIndex=-1;
+
+for(let i=0;i<Math.min(rows.length,15);i++){
+const normalized=rows[i].map(normalizeHeader);
+
+if(
+normalized.some(x=>aliases.name.includes(x))&&
+normalized.some(x=>aliases.subject.includes(x))
+){
+headerIndex=i;
+break;
+}
+}
+
+if(headerIndex===-1)return null;
+
+const header=rows[headerIndex].map(normalizeHeader);
+const indexes={};
+
+Object.entries(aliases).forEach(([key,names])=>{
+indexes[key]=header.findIndex(cell=>names.includes(cell));
+});
+
+return{headerIndex,indexes};
+}
+
+function importBooks(addToExisting=false){
+const input=$("#booksExcel");
+const file=input?.files?.[0];
+
+if(!file){
+alert("فایل Excel را انتخاب کنید.");
+return;
+}
+
+readExcel(file,rows=>{
+const structure=findColumnIndexes(rows);
+
+if(!structure){
+alert("ساختار فایل شناسایی نشد.");
+return;
+}
+
+const{headerIndex,indexes}=structure;
+
+const existingIps=new Set(
+addToExisting?S.books.map(b=>String(b.ip)):[]
+);
+
+let nextIp=Math.max(0,...S.books.map(b=>Number(b.ip)||0));
+const imported=[];
+
+for(let i=headerIndex+1;i<rows.length;i++){
+const row=rows[i];
+
+const name=String(row[indexes.name]??"").trim();
+if(!name)continue;
+
+const subject=indexes.subject>=0?String(row[indexes.subject]??"").trim():"";
+const author=indexes.author>=0?String(row[indexes.author]??"").trim():"";
+const date=indexes.date>=0?String(row[indexes.date]??"").trim():"";
+const grade=indexes.grade>=0?gradeFrom(row[indexes.grade]):"";
+
+let ip=indexes.ip>=0?String(row[indexes.ip]??"").trim():"";
+
+if(!ip||existingIps.has(ip)){
+do{
+nextIp++;
+ip=String(nextIp);
+}while(existingIps.has(ip));
+}
+
+existingIps.add(ip);
+ensureCategory(subject);
+
+imported.push({ip,name,subject,author,date,grade});
+}
+
+if(!imported.length){
+alert("هیچ کتابی پیدا نشد.");
+return;
+}
+
+S.books=addToExisting?[...S.books,...imported]:imported;
+
+saveState();
+alert(`${imported.length} کتاب ثبت شد.`);
+input.value="";
+render();
+});
+}
+
+function menuItems(){
+if(U.role==="admin"){
+return[
+["home","bi bi-book","کتابخانه"],
+["reservations","bi bi-clipboard-check","رزروها"],
+["booksExcel","bi bi-file-earmark-excel","کتاب‌ها (Excel)"],
+["students","bi bi-people","کاربران"],
+["settings","bi bi-gear","تنظیمات"]
+];
+}
+
+return[
+["home","bi bi-book","کتابخانه"],
+["progress","bi bi-person-badge","پنل من"],
+["mine","bi bi-journal-bookmark","کتاب‌های من"],
+["rank","bi bi-trophy","رتبه‌بندی"],
+["recommendations","bi bi-bell","معرفی‌های من"]
+];
+}
+
+function render(){
+const root=$("#root");
+
+if(!root)return;
+
+if(!U){
+root.innerHTML=loginView();
+return;
+}
+
+const active=[
+"reservations","booksExcel","students","settings","mine",
+"rank","recommendations","progress","studentProfile"
+].includes(V.v)?V.v:"home";
+
+const views={
+home:homeView,
+list:bookListView,
+book:bookDetailView,
+success:successView,
+mine:myBooksView,
+rank:rankingView,
+recommendations:recommendationsView,
+progress:studentProgressView,
+reservations:reservationsView,
+booksExcel:excelView,
+students:studentsView,
+studentProfile:studentProfileView,
+settings:settingsView
+};
+
+root.innerHTML=`
+<header class="app-topbar">
+<div class="container-fluid h-100 px-3 px-lg-4">
+<div class="d-flex align-items-center justify-content-between h-100 gap-3">
+<div class="brand">
+گنجینه ی کتاب
+<small>${U.role==="admin"?"پنل مدیریت":"پنل دانش‌آموز"}</small>
+</div>
+
+<div class="d-flex align-items-center gap-2">
+<span class="text-secondary d-none d-sm-inline">
+<i class="bi bi-person-circle"></i>
+${U.role==="admin"?"مدیر":escapeHTML(findStudent(U.code)?.name||"")}
+</span>
+
+${U.role==="student"?`<span class="badge text-bg-warning">سطح ${studentLevel(U.code)}</span>`:""}
+
+<button class="btn btn-sm btn-outline-danger" onclick="logout()">
+<i class="bi bi-box-arrow-right"></i>
+خروج
+</button>
+</div>
+</div>
+</div>
+</header>
+
+<div class="app-layout d-flex">
+<aside class="sidebar">
+<div class="sidebar-title">منوی اصلی</div>
+<nav>
+${menuItems().map(item=>`
+<button class="menu-btn ${item[0]===active?"active":""}" onclick="navigateRoot('${item[0]}')">
+<i class="${item[1]} ms-1"></i>${item[2]}
+</button>
+`).join("")}
+</nav>
+</aside>
+
+<main class="content">
+${views[V.v]?.()||homeView()}
+</main>
+</div>
+`;
+
+if(V.v==="list")drawBookGrid();
+}
+
+function logout(){
+U=null;
+ROLE="";
+HISTORY=[];
+V={v:"login"};
+SEARCH="";
+render();
+}
+
+function loginView(){
+return`
+<div class="login-page">
+<div class="login-box">
+
+<div class="text-center mb-4">
+<div class="display-6 text-primary mb-2">
+<i class="bi bi-book-half"></i>
+</div>
+<h1 class="h3 fw-bold mb-2">گنجینه ی کتاب</h1>
+<p class="text-secondary mb-0">سامانه کتابخانه مدرسه</p>
+</div>
+
+<div class="row g-3">
+
+<div class="col-md-6">
+<div class="role-card" onclick="selectLoginRole('student')">
+<div class="role-icon bg-success-subtle text-success">
+<i class="bi bi-mortarboard"></i>
+</div>
+<h3 class="h5 fw-bold">دانش‌آموز</h3>
+<p class="text-secondary small mb-0">رزرو کتاب، امتیاز و پیشرفت</p>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="role-card" onclick="selectLoginRole('admin')">
+<div class="role-icon bg-primary-subtle text-primary">
+<i class="bi bi-person-gear"></i>
+</div>
+<h3 class="h5 fw-bold">مدیر</h3>
+<p class="text-secondary small mb-0">مدیریت کتاب‌ها و کاربران</p>
+</div>
+</div>
+
+</div>
+
+<div id="loginForm" class="card-modern p-3 mt-4 d-none">
+<label id="loginLabel" class="form-label fw-bold"></label>
+
+<div class="input-group">
+<input id="loginInput" class="form-control" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()">
+<button id="loginButton" class="btn btn-primary px-4" onclick="doLogin()">ورود</button>
+</div>
+
+<div id="loginStatus" class="small text-secondary mt-2"></div>
+</div>
+
+</div>
+</div>
+`;
+}
+
+function selectLoginRole(role){
+ROLE=role;
+
+const form=$("#loginForm");
+const label=$("#loginLabel");
+const input=$("#loginInput");
+const status=$("#loginStatus");
+
+if(!form||!input)return;
+
+form.classList.remove("d-none");
+
+label.textContent=role==="student"
+?"رمز عبور دانش‌آموز را وارد کنید"
+:"رمز مدیر را وارد کنید";
+
+input.type="password";
+input.placeholder=role==="student"?"رمز عبور دانش‌آموز":"رمز مدیر";
+input.value="";
+
+if(status)status.textContent="";
+
+setTimeout(()=>input.focus(),50);
+}
+
+async function doLogin(){
+const input=$("#loginInput");
+const value=input?.value.trim();
+
+if(!value){
+alert("رمز عبور را وارد کنید.");
+return;
+}
+
+const button=$("#loginButton");
+
+if(button){
+button.disabled=true;
+button.innerHTML='<span class="spinner-border spinner-border-sm"></span> ورود';
+}
+
+try{
+if(ROLE==="admin"){
+const adminPassword=String(S.pw||"admin123");
+
+if(value!==adminPassword){
+alert("رمز مدیر اشتباه است.");
+return;
+}
+
+U={role:"admin",name:"مدیر"};
+U.quote=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+navigateRoot("home");
+return;
+}
+
+if(ROLE==="student"){
+const student=S.students.find(s=>String(s.password||"")===value);
+
+if(!student){
+alert("رمز عبور دانش‌آموز اشتباه است.");
+return;
+}
+
+U={
+role:"student",
+code:String(student.code),
+name:student.name,
+quote:QUOTES[Math.floor(Math.random()*QUOTES.length)]
+};
+
+navigateRoot("home");
+return;
+}
+
+alert("ابتدا نقش ورود را انتخاب کنید.");
+}finally{
+if(button){
+button.disabled=false;
+button.innerHTML="ورود";
+}
+}
+}
+
+function homeView(){
+const isAdmin=U.role==="admin";
+
+let html=`
+<div class="page-title">دسته‌بندی‌های کتابخانه</div>
+<div class="page-description">دسته مورد نظر را انتخاب کنید.</div>
+`;
+
+if(U.quote){
+html+=`
+<div class="alert alert-primary border-0 shadow-sm">
+<i class="bi bi-lightbulb"></i> ${escapeHTML(U.quote)}
+</div>
+`;
+}
+
+if(U.role==="student"){
+const student=findStudent(U.code);
+
+const pending=(S.directRecs||[]).filter(r=>
+String(r.toCode)===String(U.code)&&!r.awarded
+);
+
+const readCount=(S.res||[]).filter(r=>
+String(r.student)===String(U.code)&&r.read
+).length;
+
+html+=`
+<div class="row g-3 mb-4">
+<div class="col-sm-4">
+<div class="score-card h-100">
+<div class="small text-secondary">امتیاز من</div>
+<div class="stat-number">${formatScore(student?.pts||0)}</div>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="read-card card-modern p-3 h-100">
+<div class="small text-secondary">کتاب‌های خوانده‌شده</div>
+<div class="stat-number text-success">${formatScore(readCount)}</div>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="presentation-card card-modern p-3 h-100">
+<div class="small text-secondary">سطح</div>
+<div class="stat-number text-warning">${formatScore(studentLevel(U.code))}</div>
+</div>
+</div>
+</div>
+`;
+
+if(pending.length){
+html+=`
+<div class="notification-card card-modern p-3 mb-4">
+<div class="fw-bold text-primary mb-2">
+<i class="bi bi-bell-fill"></i> معرفی جدید برای شما
+</div>
+
+${pending.slice(0,3).map(rec=>{
+const book=findBook(rec.book);
+const sender=findStudent(rec.fromCode);
+
+if(!book)return"";
+
+return`
+<div class="border-top pt-3 mt-3">
+<div>
+<strong>${escapeHTML(sender?.name||rec.fromName||"یک دانش‌آموز")}</strong>
+این کتاب را به شما معرفی کرده است:
+</div>
+
+<div class="fw-bold mt-1">${escapeHTML(bookName(book))}</div>
+
+<button class="btn btn-sm btn-primary mt-2" onclick="navigate('book',{ip:'${escapeHTML(book.ip)}'})">
+<i class="bi bi-book"></i> مشاهده کتاب
+</button>
+</div>
+`;
+}).join("")}
+</div>
+`;
+}
+}
+
+if(!S.books.length){
+html+=`
+<div class="card-modern p-4 mb-4">
+<i class="bi bi-info-circle text-primary"></i>
+هنوز کتابی ثبت نشده است.
+</div>
+`;
+}
+
+html+=`
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
+${S.cats.map(category=>{
+const count=booksByCategory(category.id).length;
+
+return`
+<div class="col">
+<div class="card-modern category-card" onclick="navigate('list',{id:'${escapeHTML(category.id)}'})">
+
+<div class="category-icon mb-3">
+<i class="${SUBJECT_ICONS[category.name]||"bi bi-book"}"></i>
+</div>
+
+<h3 class="h6 fw-bold">${escapeHTML(category.name)}</h3>
+
+<div class="small text-secondary mb-3">
+<span class="stat-number d-block">${formatScore(count)}</span>
+کتاب
+</div>
+
+${isAdmin
+?`
+<div class="d-flex gap-2" onclick="event.stopPropagation()">
+<button class="btn btn-sm btn-outline-primary" onclick="renameCategory('${escapeHTML(category.id)}')">نام</button>
+<button class="btn btn-sm btn-outline-danger" onclick="deleteCategory('${escapeHTML(category.id)}')">حذف</button>
+</div>
+`
+:`<button class="btn btn-primary btn-sm w-100">مشاهده کتاب‌ها</button>`}
+
+</div>
+</div>
+`;
+}).join("")}
+</div>
+`;
+
+if(isAdmin){
+html+=`
+<button class="btn btn-success mt-4" onclick="addCategory()">
+<i class="bi bi-plus-lg"></i> دسته‌بندی جدید
+</button>
+`;
+}
+
+return html;
+}
+
+function bookListView(){
+const category=categoryById(V.id);
+
+if(!category)return`<div class="alert alert-danger">دسته‌بندی پیدا نشد.</div>`;
+
+return`
+<div class="mb-3">
+<button class="btn btn-outline-secondary btn-sm" onclick="goBack()">
+<i class="bi bi-arrow-right"></i> بازگشت
+</button>
+</div>
+
+<div class="page-title">${escapeHTML(category.name)}</div>
+<div class="page-description">${formatScore(booksByCategory(V.id).length)} کتاب</div>
+
+<div class="search-box mb-4">
+<div class="input-group">
+<span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+<input id="bookSearch" class="form-control" placeholder="جستجوی نام کتاب یا نویسنده..." value="${escapeHTML(SEARCH)}" oninput="SEARCH=this.value;drawBookGrid()">
+</div>
+</div>
+
+<div id="bookGrid" class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-3"></div>
+`;
+}
+
+function drawBookGrid(){
+const grid=$("#bookGrid");
+if(!grid)return;
+
+const query=SEARCH.trim().toLowerCase();
+
+const books=booksByCategory(V.id).filter(book=>{
+const text=`${bookName(book)} ${book.author}`.toLowerCase();
+return!query||text.includes(query);
+});
+
+if(!books.length){
+grid.innerHTML=`
+<div class="col-12">
+<div class="empty-state card-modern">
+<i class="bi bi-search fs-1 d-block mb-3"></i>
+کتابی پیدا نشد.
+</div>
+</div>`;
+return;
+}
+
+grid.innerHTML=books.map(book=>{
+const reservation=activeReservation(book.ip);
+
+return`
+<div class="col">
+<div class="card-modern book-card" onclick="navigate('book',{ip:'${escapeHTML(book.ip)}'})">
+
+<img class="book-cover" loading="lazy" src="${bookImages(book)[0]}" alt="${escapeHTML(bookName(book))}">
+
+<div class="p-2">
+<div class="fw-bold small mb-1">${escapeHTML(bookName(book))}</div>
+<div class="text-secondary small">${escapeHTML(book.author||"نویسنده نامشخص")}</div>
+
+${reservation?`<span class="tag mt-2">رزرو شده</span>`:""}
+
+</div>
+</div>
+</div>
+`;
+}).join("");
+}
+
+function bookDetailView(){
+const book=findBook(V.ip);
+
+if(!book)return`<div class="alert alert-danger">کتاب پیدا نشد.</div>`;
+
+const reservation=activeReservation(book.ip);
+const isAdmin=U.role==="admin";
+
+return`
+<div class="mb-3">
+<button class="btn btn-outline-secondary btn-sm" onclick="goBack()">
+<i class="bi bi-arrow-right"></i> بازگشت
+</button>
+</div>
+
+<div class="card-modern p-3 p-lg-4">
+
+<div class="book-images mb-4">
+${bookImages(book).map(img=>`<img src="${img}" alt="">`).join("")}
+</div>
+
+<div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+<h1 class="h4 fw-bold mb-0">${escapeHTML(bookName(book))}</h1>
+${reservation?`<span class="tag">رزرو شده</span>`:""}
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-2 mb-4">
+
+<div class="col">
+<div class="info-box">
+موضوع
+<strong>${escapeHTML(book.subject||"-")}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+نویسنده
+<strong>${escapeHTML(book.author||"-")}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+تاریخ انتشار
+<strong>${escapeHTML(book.date||"-")}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+شماره کتاب
+<strong>${escapeHTML(book.ip||"-")}</strong>
+</div>
+</div>
+
+${book.grade
+?`
+<div class="col">
+<div class="info-box">
+پایه تحصیلی
+<strong>${escapeHTML(book.grade)}</strong>
+</div>
+</div>
+`
+:""}
+
+</div>
+
+${isAdmin
+?adminBookEditor(book)
+:reservation
+?`<div class="alert alert-danger mb-0">این کتاب در حال حاضر رزرو شده است.</div>`
+:`<button class="btn btn-success" onclick="reserveBook('${escapeHTML(book.ip)}')">
+<i class="bi bi-bookmark-check"></i> رزرو کتاب
+</button>`}
+
+${isAdmin?"":recommendationForm(book)}
+${recommendationsForBookHTML(book)}
+
+</div>
+`;
+}
+
+function adminBookEditor(book){
+return`
+<div class="border-top pt-4 mt-4">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-pencil-square"></i>
+ویرایش اطلاعات کتاب
+</h2>
+
+<div class="row g-2">
+
+<div class="col-md-6">
+<label class="form-label">نام کتاب</label>
+<input id="editBookName" class="form-control" value="${escapeHTML(bookName(book))}">
+</div>
+
+<div class="col-md-6">
+<label class="form-label">نام نویسنده</label>
+<input id="editBookAuthor" class="form-control" value="${escapeHTML(book.author||"")}">
+</div>
+
+<div class="col-md-4">
+<label class="form-label">موضوع</label>
+<select id="editBookSubject" class="form-select">
+${S.cats.map(c=>`
+<option value="${escapeHTML(c.name)}" ${c.name===book.subject?"selected":""}>
+${escapeHTML(c.name)}
+</option>
+`).join("")}
+</select>
+</div>
+
+<div class="col-md-4">
+<label class="form-label">تاریخ انتشار</label>
+<input id="editBookDate" class="form-control" value="${escapeHTML(book.date||"")}">
+</div>
+
+<div class="col-md-4">
+<label class="form-label">پایه تحصیلی</label>
+<select id="editBookGrade" class="form-select">
+<option value="">بدون پایه</option>
+${GRADES.map(g=>`
+<option value="${g}" ${g===book.grade?"selected":""}>${g}</option>
+`).join("")}
+</select>
+</div>
+
+<div class="col-12">
+<label class="form-label">تصویر جلد</label>
+<input id="editBookImage" type="file" accept="image/*" class="form-control">
+</div>
+
+</div>
+
+<div class="d-flex flex-wrap gap-2 mt-3">
+
+<button class="btn btn-primary" onclick="saveBookEdit('${escapeHTML(book.ip)}')">
+<i class="bi bi-check-lg"></i>
+ذخیره تغییرات
+</button>
+
+<button class="btn btn-outline-danger" onclick="deleteBook('${escapeHTML(book.ip)}')">
+<i class="bi bi-trash"></i>
+حذف کتاب
+</button>
+
+</div>
+</div>
+`;
+}
+
+function recommendationForm(book){
+if(U.role!=="student")return"";
+
+const students=S.students.filter(s=>String(s.code)!==String(U.code));
+
+if(!students.length)return"";
+
+return`
+<div class="border-top pt-4 mt-4">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-person-plus"></i>
+معرفی این کتاب به یک دوست
+</h2>
+
+<div class="row g-2">
+
+<div class="col-md-8">
+<select id="recommendStudent_${escapeHTML(book.ip)}" class="form-select">
+<option value="">انتخاب دانش‌آموز</option>
+
+${students.map(student=>`
+<option value="${escapeHTML(student.code)}">
+${escapeHTML(student.name)}
+</option>
+`).join("")}
+
+</select>
+</div>
+
+<div class="col-md-4">
+<button class="btn btn-primary w-100" onclick="recommendBook('${escapeHTML(book.ip)}')">
+<i class="bi bi-send"></i>
+معرفی کتاب
+</button>
+</div>
+
+</div>
+</div>
+`;
+}
+
+function recommendationsForBookHTML(book){
+const records=(S.res||[]).filter(r=>
+String(r.book)===String(book.ip)&&Number(r.rating)>0
+);
+
+if(!records.length)return"";
+
+return`
+<div class="border-top pt-4 mt-4">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-star-fill text-warning"></i>
+نظر دانش‌آموزان
+</h2>
+
+${records.slice(-10).reverse().map(record=>{
+const student=findStudent(record.student);
+
+return`
+<div class="border-bottom py-3">
+
+<div class="d-flex justify-content-between gap-2">
+<strong>${escapeHTML(student?.name||"دانش‌آموز")}</strong>
+
+<span class="text-warning">
+${"★".repeat(Math.max(0,Math.min(5,Number(record.rating))))}
+</span>
+</div>
+
+${record.comment
+?`<div class="small text-secondary mt-1">${escapeHTML(record.comment)}</div>`
+:""}
+
+</div>
+`;
+}).join("")}
+
+</div>
+`;
+}
+
+function reserveBook(ip){
+if(U.role!=="student"){
+alert("این امکان فقط برای دانش‌آموزان است.");
+return;
+}
+
+const book=findBook(ip);
+
+if(!book){
+alert("کتاب پیدا نشد.");
+return;
+}
+
+if(activeReservation(ip)){
+alert("این کتاب قبلاً رزرو شده است.");
+return;
+}
+
+const student=findStudent(U.code);
+
+if(!student){
+alert("اطلاعات دانش‌آموز پیدا نشد.");
+return;
+}
+
+const days=Math.max(1,Number(S.days)||7);
+
+const reservation={
+id:createId("reservation"),
+book:String(ip),
+student:String(U.code),
+createdAt:Date.now(),
+due:Date.now()+days*DAY,
+done:false,
+read:false,
+readAt:null,
+rating:0,
+comment:"",
+readAwarded:false,
+ratingAwarded:false,
+presentation:false,
+presentationAt:null,
+presentationAwarded:false
+};
+
+S.res.push(reservation);
+
+saveState();
+
+V={v:"success",ip};
+render();
+}
+
+function successView(){
+const book=findBook(V.ip);
+
+return`
+<div class="card-modern p-5 text-center">
+
+<div class="display-1 text-success mb-3">
+<i class="bi bi-check-circle-fill"></i>
+</div>
+
+<h1 class="h4 fw-bold">رزرو با موفقیت انجام شد</h1>
+
+<p class="text-secondary">
+${book?`کتاب «${escapeHTML(bookName(book))}» برای شما رزرو شد.`:"رزرو کتاب انجام شد."}
+</p>
+
+<div class="d-flex justify-content-center gap-2 flex-wrap">
+
+<button class="btn btn-primary" onclick="navigateRoot('mine')">
+کتاب‌های من
+</button>
+
+<button class="btn btn-outline-secondary" onclick="navigateRoot('home')">
+بازگشت به کتابخانه
+</button>
+
+</div>
+</div>
+`;
+}
+
+function getStudentReservations(code){
+return(S.res||[]).filter(r=>String(r.student)===String(code));
+}
+
+function getStudentReadReservations(code){
+return getStudentReservations(code).filter(r=>r.read);
+}
+
+function myBooksView(){
+if(U.role!=="student")return homeView();
+
+const reservations=getStudentReservations(U.code);
+const readReservations=getStudentReadReservations(U.code);
+
+return`
+<div class="page-title">کتاب‌های من</div>
+<div class="page-description">رزروها و کتاب‌های مطالعه‌شده شما</div>
+
+<div class="card-modern p-3 mb-4">
+<div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+
+<div>
+<div class="fw-bold">
+<i class="bi bi-bookmark-check text-primary"></i>
+کتاب‌های رزروشده
+</div>
+<div class="small text-secondary">
+کتاب‌هایی که برای شما ثبت شده‌اند
+</div>
+</div>
+
+<div class="stat-number">
+${formatScore(reservations.filter(r=>!r.read).length)}
+</div>
+
+</div>
+</div>
+
+${reservations.filter(r=>!r.read).length
+?`
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-5">
+${reservations.filter(r=>!r.read).slice().reverse().map(r=>{
+const book=findBook(r.book);
+
+if(!book)return"";
+
+const expired=reservationExpired(r);
+
+return`
+<div class="col">
+<div class="card-modern p-3 h-100">
+
+<div class="d-flex gap-3">
+
+<img src="${bookImages(book)[0]}"
+style="width:90px;height:120px;object-fit:cover;border-radius:12px"
+alt="">
+
+<div class="flex-grow-1">
+
+<div class="fw-bold">${escapeHTML(bookName(book))}</div>
+
+<div class="small text-secondary mt-1">
+${escapeHTML(book.author||"")}
+</div>
+
+<div class="mt-2">
+${expired
+?`<span class="badge text-bg-danger">مهلت تمام شده</span>`
+:`<span class="badge text-bg-primary">در حال مطالعه</span>`}
+</div>
+
+<div class="small text-secondary mt-2">
+تا ${dateFa(r.due)}
+</div>
+
+</div>
+</div>
+
+<div class="mt-3">
+<div class="alert alert-info small mb-0">
+<i class="bi bi-info-circle"></i>
+پس از مطالعه، ثبت «خوانده‌شدن» توسط مدیر انجام می‌شود.
+</div>
+</div>
+
+<div class="mt-3">
+${ratingForm(r)}
+</div>
+
+</div>
+</div>
+`;
+}).join("")}
+</div>
+`
+:`
+<div class="empty-state card-modern mb-5">
+<i class="bi bi-journal-x fs-1 d-block mb-3"></i>
+در حال حاضر کتاب رزروشده‌ای ندارید.
+</div>
+`}
+
+<div class="page-title h4 mt-4">
+<i class="bi bi-check-circle-fill text-success"></i>
+کتاب‌های خوانده‌شده من
+</div>
+
+<div class="page-description">
+این کتاب‌ها توسط مدیر به‌عنوان «خوانده‌شده» ثبت شده‌اند.
+</div>
+
+${readReservations.length
+?`
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+
+${readReservations.slice().reverse().map(r=>{
+const book=findBook(r.book);
+
+if(!book)return"";
+
+return`
+<div class="col">
+
+<div class="read-card card-modern p-3 h-100">
+
+<div class="d-flex gap-3">
+
+<img src="${bookImages(book)[0]}"
+style="width:90px;height:120px;object-fit:cover;border-radius:12px"
+alt="">
+
+<div class="flex-grow-1">
+
+<div class="fw-bold">
+${escapeHTML(bookName(book))}
+</div>
+
+<div class="small text-secondary mt-1">
+${escapeHTML(book.author||"")}
+</div>
+
+<div class="mt-3">
+<span class="badge text-bg-success">
+<i class="bi bi-check-circle"></i>
+خوانده شده
+</span>
+</div>
+
+<div class="small text-secondary mt-2">
+تاریخ ثبت مطالعه: ${dateFa(r.readAt||r.createdAt)}
+</div>
+
+<div class="small text-success fw-bold mt-2">
++۱ امتیاز
+</div>
+
+</div>
+</div>
+
+<div class="mt-3">
+${ratingForm(r)}
+</div>
+
+</div>
+</div>
+`;
+}).join("")}
+
+</div>
+`
+:`
+<div class="empty-state card-modern">
+<i class="bi bi-book fs-1 d-block mb-3"></i>
+هنوز کتابی به‌عنوان خوانده‌شده برای شما ثبت نشده است.
+</div>
+`}
+`;
+}
+
+function ratingForm(reservation){
+const book=findBook(reservation.book);
+
+if(!book)return"";
+
+return`
+<div class="border-top pt-3">
+
+<div class="small fw-bold mb-2">امتیاز شما</div>
+
+<div>
+${[1,2,3,4,5].map(n=>`
+<button class="star" onclick="rateBook('${escapeHTML(reservation.id)}',${n})">
+${n<=Number(reservation.rating||0)?"★":"☆"}
+</button>
+`).join("")}
+</div>
+
+<textarea id="comment_${escapeHTML(reservation.id)}"
+class="form-control mt-2"
+rows="2"
+placeholder="نظر شما درباره کتاب...">${escapeHTML(reservation.comment||"")}</textarea>
+
+<button class="btn btn-sm btn-outline-primary mt-2" onclick="saveComment('${escapeHTML(reservation.id)}')">
+ثبت نظر
+</button>
+
+</div>
+`;
+}
+
+function finishReservation(id){
+if(U?.role!=="admin"){
+alert("ثبت مطالعه فقط توسط مدیر انجام می‌شود.");
+return;
+}
+
+markReservationRead(id);
+}
+
+function markReservationRead(id){
+if(U?.role!=="admin"){
+alert("ثبت مطالعه فقط توسط مدیر انجام می‌شود.");
+return;
+}
+
+const reservation=(S.res||[]).find(r=>String(r.id)===String(id));
+
+if(!reservation){
+alert("رزرو پیدا نشد.");
+return;
+}
+
+if(reservation.read){
+alert("این کتاب قبلاً به‌عنوان خوانده‌شده ثبت شده است.");
+return;
+}
+
+const student=findStudent(reservation.student);
+
+if(!student){
+alert("دانش‌آموز این رزرو پیدا نشد.");
+return;
+}
+
+reservation.read=true;
+reservation.done=true;
+reservation.readAt=Date.now();
+
+if(!reservation.readAwarded){
+const added=addScore(reservation.student,"read",{
+book:reservation.book,
+uniqueKey:`read-admin-${reservation.id}`
+});
+
+reservation.readAwarded=added||reservation.readAwarded;
+}
+
+saveState();
+
+alert(`مطالعه کتاب برای «${student.name}» ثبت شد و ۱ امتیاز اضافه شد.`);
+
+render();
+}
+
+function togglePresentation(id){
+if(U?.role!=="admin"){
+alert("ثبت ارائه کتاب فقط توسط مدیر انجام می‌شود.");
+return;
+}
+
+const reservation=(S.res||[]).find(r=>String(r.id)===String(id));
+
+if(!reservation){
+alert("رزرو پیدا نشد.");
+return;
+}
+
+const student=findStudent(reservation.student);
+const book=findBook(reservation.book);
+
+if(!reservation.presentation){
+
+reservation.presentation=true;
+reservation.presentationAt=Date.now();
+
+if(!reservation.presentationAwarded){
+const added=addScore(reservation.student,"presentation",{
+book:reservation.book,
+uniqueKey:`presentation-admin-${reservation.id}`
+});
+
+reservation.presentationAwarded=added||reservation.presentationAwarded;
+}
+
+saveState();
+
+alert(`ارائه کتاب برای «${student?.name||"دانش‌آموز"}» ثبت شد.`);
+
+}else{
+
+reservation.presentation=false;
+reservation.presentationAt=null;
+
+if(reservation.presentationAwarded){
+const scoreIndex=S.scoreHistory.findIndex(x=>
+String(x.uniqueKey)===`presentation-admin-${reservation.id}`
+);
+
+if(scoreIndex>=0){
+const score=S.scoreHistory[scoreIndex];
+const target=findStudent(reservation.student);
+
+if(target){
+target.pts=Math.max(0,Number(target.pts||0)-Number(score.amount||0));
+}
+
+S.scoreHistory.splice(scoreIndex,1);
+}
+
+reservation.presentationAwarded=false;
+}
+
+saveState();
+
+alert("ثبت ارائه کتاب لغو شد.");
+}
+
+render();
+}
+
+function rateBook(id,rating){
+const reservation=(S.res||[]).find(r=>String(r.id)===String(id));
+
+if(!reservation)return;
+
+if(String(reservation.student)!==String(U.code)){
+alert("دسترسی غیرمجاز.");
+return;
+}
+
+reservation.rating=Number(rating);
+
+if(!reservation.ratingAwarded){
+const added=addScore(U.code,"rate",{
+book:reservation.book,
+uniqueKey:`rating-${reservation.id}`
+});
+
+reservation.ratingAwarded=added||reservation.ratingAwarded;
+}
+
+saveState();
+render();
+}
+
+function saveComment(id){
+const reservation=(S.res||[]).find(r=>String(r.id)===String(id));
+
+if(!reservation)return;
+
+if(String(reservation.student)!==String(U.code)){
+alert("دسترسی غیرمجاز.");
+return;
+}
+
+const input=$(`#comment_${CSS.escape(String(id))}`);
+
+if(!input)return;
+
+reservation.comment=input.value.trim();
+
+saveState();
+alert("نظر شما ثبت شد.");
+render();
+}
+
+function recommendBook(ip){
+const select=$(`#recommendStudent_${CSS.escape(String(ip))}`);
+
+if(!select||!select.value){
+alert("دانش‌آموز مورد نظر را انتخاب کنید.");
+return;
+}
+
+const target=String(select.value);
+
+if(target===String(U.code)){
+alert("نمی‌توانید کتاب را به خودتان معرفی کنید.");
+return;
+}
+
+const duplicate=(S.directRecs||[]).some(r=>
+String(r.book)===String(ip)&&
+String(r.fromCode)===String(U.code)&&
+String(r.toCode)===target
+);
+
+if(duplicate){
+alert("این کتاب قبلاً به این دانش‌آموز معرفی شده است.");
+return;
+}
+
+S.directRecs.push({
+id:createId("direct-rec"),
+book:String(ip),
+fromCode:String(U.code),
+toCode:target,
+createdAt:Date.now(),
+awarded:false
+});
+
+saveState();
+alert("کتاب با موفقیت معرفی شد.");
+render();
+}
+
+function recommendationsView(){
+if(U.role!=="student")return homeView();
+
+const received=(S.directRecs||[])
+.filter(r=>String(r.toCode)===String(U.code));
+
+return`
+<div class="page-title">معرفی‌های من</div>
+<div class="page-description">کتاب‌هایی که دوستانتان برای شما معرفی کرده‌اند</div>
+
+${received.length
+?`
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+
+${received.slice().reverse().map(rec=>{
+const book=findBook(rec.book);
+const sender=findStudent(rec.fromCode);
+
+if(!book)return"";
+
+return`
+<div class="col">
+
+<div class="recommend-card card-modern p-3 h-100">
+
+<div class="d-flex gap-3">
+
+<img src="${bookImages(book)[0]}"
+style="width:80px;height:105px;object-fit:cover;border-radius:11px"
+alt="">
+
+<div class="flex-grow-1">
+
+<div class="fw-bold">${escapeHTML(bookName(book))}</div>
+
+<div class="small text-secondary mt-1">
+معرفی از طرف ${escapeHTML(sender?.name||"دوست شما")}
+</div>
+
+<div class="mt-3">
+<button class="btn btn-primary btn-sm" onclick="navigate('book',{ip:'${escapeHTML(book.ip)}'})">
+مشاهده کتاب
+</button>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+`;
+}).join("")}
+
+</div>
+`
+:`
+<div class="empty-state card-modern">
+<i class="bi bi-bell-slash fs-1 d-block mb-3"></i>
+هنوز کتابی برای شما معرفی نشده است.
+</div>
+`}
+`;
+}
+
+function rankingView(){
+const students=[...S.students].sort((a,b)=>Number(b.pts||0)-Number(a.pts||0));
+
+return`
+<div class="page-title">رتبه‌بندی</div>
+<div class="page-description">امتیاز و رتبه دانش‌آموزان</div>
+
+<div class="card-modern p-3">
+
+<div class="table-wrap">
+
+<table class="table table-modern align-middle mb-0">
+
+<thead>
+<tr>
+<th>رتبه</th>
+<th>نام</th>
+<th>پایه</th>
+<th>امتیاز</th>
+<th>سطح</th>
+</tr>
+</thead>
+
+<tbody>
+
+${students.length
+?students.map((student,index)=>`
+<tr>
+
+<td>
+<span class="badge ${index===0?"text-bg-warning":index===1?"text-bg-secondary":index===2?"text-bg-danger":"text-bg-light"}">
+${formatScore(index+1)}
+</span>
+</td>
+
+<td>
+<button class="student-name-link" onclick="openStudentProfile('${escapeHTML(student.code)}')">
+${escapeHTML(student.name)}
+</button>
+</td>
+
+<td>${escapeHTML(student.grade||"-")}</td>
+
+<td class="fw-bold text-primary">
+${formatScore(student.pts)}
+</td>
+
+<td>
+<span class="level-badge">سطح ${studentLevel(student.code)}</span>
+</td>
+
+</tr>
+`).join("")
+:`
+<tr>
+<td colspan="5" class="text-center text-secondary py-5">
+هنوز دانش‌آموزی ثبت نشده است.
+</td>
+</tr>
+`}
+
+</tbody>
+</table>
+</div>
+</div>
+`;
+}
+
+function progressViewData(studentCode){
+const student=findStudent(studentCode);
+
+if(!student)return null;
+
+const breakdown=scoreBreakdown(studentCode);
+
+return{
+student,
+score:Number(student.pts||0),
+level:studentLevel(studentCode),
+progress:levelProgress(studentCode),
+breakdown
+};
+}
+
+function studentProgressView(){
+if(U.role!=="student")return homeView();
+
+const data=progressViewData(U.code);
+
+if(!data)return`<div class="alert alert-danger">اطلاعات شما پیدا نشد.</div>`;
+
+const readCount=getStudentReadReservations(U.code).length;
+
+return`
+<div class="page-title">پنل من</div>
+<div class="page-description">گزارش فعالیت و امتیازهای شما</div>
+
+<div class="score-card mb-4">
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+<div>
+<div class="small text-secondary">دانش‌آموز</div>
+<h2 class="h5 fw-bold mb-1">${escapeHTML(data.student.name)}</h2>
+<div class="text-secondary small">${escapeHTML(data.student.grade||"")}</div>
+</div>
+
+<div class="text-center">
+<div class="stat-number">${formatScore(data.score)}</div>
+<div class="small text-secondary">امتیاز</div>
+</div>
+
+<div class="text-center">
+<div class="stat-number text-success">${formatScore(readCount)}</div>
+<div class="small text-secondary">کتاب خوانده‌شده</div>
+</div>
+
+<div>
+<span class="level-badge">
+<i class="bi bi-stars"></i>
+سطح ${data.level}
+</span>
+</div>
+
+</div>
+
+<div class="mt-4">
+
+<div class="d-flex justify-content-between small mb-2">
+<span>پیشرفت تا سطح بعد</span>
+<span>${Math.round(data.progress).toLocaleString("fa-IR")}%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:${data.progress}%"></div>
+</div>
+
+</div>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 g-3 mb-4">
+
+${Object.entries(SCORE_TYPES).map(([type,config])=>`
+<div class="col">
+
+<div class="card-modern p-3 h-100">
+
+<div class="text-primary fs-4">
+<i class="bi ${config.icon}"></i>
+</div>
+
+<div class="small text-secondary mt-2">
+${config.title}
+</div>
+
+<div class="stat-number">
+${formatScore(data.breakdown[type])}
+</div>
+
+</div>
+</div>
+`).join("")}
+
+</div>
+
+<div class="card-modern p-3 mb-4">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-book-half text-success"></i>
+آخرین کتاب‌های خوانده‌شده
+</h2>
+
+${getStudentReadReservations(U.code).slice().reverse().slice(0,5).map(r=>{
+const book=findBook(r.book);
+
+if(!book)return"";
+
+return`
+<div class="score-history-item d-flex justify-content-between gap-3">
+
+<div>
+<div class="fw-bold">${escapeHTML(bookName(book))}</div>
+<div class="small text-secondary">
+${escapeHTML(book.author||"")}
+</div>
+</div>
+
+<div class="text-end">
+<div class="score-positive">+۱</div>
+<div class="small text-secondary">${dateFa(r.readAt||r.createdAt)}</div>
+</div>
+
+</div>
+`;
+}).join("")||`
+<div class="text-secondary text-center py-4">
+هنوز کتابی به‌عنوان خوانده‌شده ثبت نشده است.
+</div>
+`}
+
+</div>
+
+<div class="card-modern p-3">
+
+<h2 class="h6 fw-bold mb-3">
+سوابق امتیاز
+</h2>
+
+${(S.scoreHistory||[])
+.filter(x=>String(x.student)===String(U.code))
+.slice()
+.reverse()
+.slice(0,30)
+.map(item=>`
+<div class="score-history-item d-flex justify-content-between gap-3">
+
+<div>
+<div class="fw-bold">${escapeHTML(scoreLabel(item.type))}</div>
+
+<div class="small text-secondary">
+${item.book?escapeHTML(bookName(findBook(item.book))):""}
+</div>
+</div>
+
+<div class="text-end">
+<div class="score-positive">
++${formatScore(item.amount)}
+</div>
+
+<div class="small text-secondary">
+${dateFa(item.createdAt)}
+</div>
+</div>
+
+</div>
+`).join("")||`
+<div class="text-secondary text-center py-4">
+هنوز فعالیتی ثبت نشده است.
+</div>
+`}
+
+</div>
+`;
+}
+
+function openStudentProfile(code){
+navigate("studentProfile",{code:String(code)});
+}
+
+function studentProfileView(){
+const code=V.code||U.code;
+const student=findStudent(code);
+
+if(!student){
+return`<div class="alert alert-danger">دانش‌آموز پیدا نشد.</div>`;
+}
+
+const data=progressViewData(code);
+const readReservations=getStudentReadReservations(code);
+const presentations=getStudentReservations(code).filter(r=>r.presentation);
+
+return`
+<div class="mb-3">
+<button class="btn btn-outline-secondary btn-sm" onclick="goBack()">
+<i class="bi bi-arrow-right"></i>
+بازگشت
+</button>
+</div>
+
+<div class="page-title">پروفایل دانش‌آموز</div>
+
+<div class="card-modern p-4 mb-4">
+
+<div class="d-flex align-items-center gap-3 mb-4">
+
+<div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center"
+style="width:65px;height:65px;font-size:28px">
+<i class="bi bi-person"></i>
+</div>
+
+<div>
+<h2 class="h5 fw-bold mb-1">${escapeHTML(student.name)}</h2>
+<div class="text-secondary">${escapeHTML(student.grade||"")}</div>
+</div>
+
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-5 g-3">
+
+<div class="col">
+<div class="info-box">
+امتیاز
+<strong>${formatScore(data.score)}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+سطح
+<strong>${formatScore(data.level)}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+رزروها
+<strong>${formatScore(getStudentReservations(code).length)}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+کتاب‌های خوانده‌شده
+<strong>${formatScore(readReservations.length)}</strong>
+</div>
+</div>
+
+<div class="col">
+<div class="info-box">
+ارائه‌ها
+<strong>${formatScore(presentations.length)}</strong>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="card-modern p-3">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-book-check text-success"></i>
+کتاب‌های خوانده‌شده
+</h2>
+
+${readReservations.length
+?`
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+
+${readReservations.slice().reverse().map(r=>{
+const book=findBook(r.book);
+
+if(!book)return"";
+
+return`
+<div class="col">
+
+<div class="read-card card-modern p-3 h-100">
+
+<div class="d-flex gap-3">
+
+<img src="${bookImages(book)[0]}"
+style="width:75px;height:100px;object-fit:cover;border-radius:10px"
+alt="">
+
+<div>
+
+<div class="fw-bold">
+${escapeHTML(bookName(book))}
+</div>
+
+<div class="small text-secondary mt-1">
+${escapeHTML(book.author||"")}
+</div>
+
+<div class="badge text-bg-success mt-2">
+خوانده شده
+</div>
+
+<div class="small text-secondary mt-2">
+${dateFa(r.readAt||r.createdAt)}
+</div>
+
+</div>
+</div>
+</div>
+</div>
+`;
+}).join("")}
+
+</div>
+`
+:`
+<div class="text-center text-secondary py-4">
+هنوز کتابی خوانده نشده است.
+</div>
+`}
+
+</div>
+`;
+}
+
+function reservationsView(){
+if(U.role!=="admin")return homeView();
+
+const reservations=[...S.res].sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
+
+return`
+<div class="page-title">مدیریت رزروها</div>
+
+<div class="page-description">
+مدیریت رزرو، ثبت مطالعه و ثبت ارائه کتاب
+</div>
+
+<div class="row g-3 mb-4">
+
+<div class="col-sm-4">
+<div class="card-modern p-3">
+<div class="small text-secondary">کل رزروها</div>
+<div class="stat-number">${formatScore(reservations.length)}</div>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="read-card card-modern p-3">
+<div class="small text-secondary">کتاب‌های خوانده‌شده</div>
+<div class="stat-number text-success">
+${formatScore(reservations.filter(r=>r.read).length)}
+</div>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="presentation-card card-modern p-3">
+<div class="small text-secondary">ارائه‌های ثبت‌شده</div>
+<div class="stat-number text-warning">
+${formatScore(reservations.filter(r=>r.presentation).length)}
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="card-modern p-3">
+
+<div class="table-wrap">
+
+<table class="table table-modern align-middle">
+
+<thead>
+<tr>
+<th>کتاب</th>
+<th>دانش‌آموز</th>
+<th>تاریخ رزرو</th>
+<th>موعد</th>
+<th>مطالعه</th>
+<th>ارائه</th>
+<th>عملیات</th>
+</tr>
+</thead>
+
+<tbody>
+
+${reservations.length
+?reservations.map(r=>{
+const book=findBook(r.book);
+const student=findStudent(r.student);
+
+return`
+<tr>
+
+<td>
+<div class="fw-bold">${escapeHTML(bookName(book)||"-")}</div>
+<div class="small text-secondary">${escapeHTML(book?.author||"")}</div>
+</td>
+
+<td>
+<button class="student-name-link" onclick="openStudentProfile('${escapeHTML(r.student)}')">
+${escapeHTML(student?.name||r.student||"-")}
+</button>
+</td>
+
+<td>${dateFa(r.createdAt)}</td>
+
+<td>${dateFa(r.due)}</td>
+
+<td>
+
+${r.read
+?`
+<div>
+<span class="badge text-bg-success">
+<i class="bi bi-check-circle"></i>
+خوانده شده
+</span>
+
+<div class="small text-secondary mt-1">
+${dateFa(r.readAt)}
+</div>
+</div>
+`
+:`
+<button class="btn btn-sm btn-success"
+onclick="markReservationRead('${escapeHTML(r.id)}')">
+<i class="bi bi-check2-circle"></i>
+ثبت مطالعه +۱
+</button>
+`}
+
+</td>
+
+<td>
+
+${r.presentation
+?`
+<div>
+<span class="badge text-bg-warning">
+<i class="bi bi-mic-fill"></i>
+ارائه شده
+</span>
+
+<div class="small text-secondary mt-1">
+${dateFa(r.presentationAt)}
+</div>
+
+<button class="btn btn-sm btn-outline-secondary mt-1"
+onclick="togglePresentation('${escapeHTML(r.id)}')">
+لغو
+</button>
+</div>
+`
+:`
+<button class="btn btn-sm btn-outline-warning"
+onclick="togglePresentation('${escapeHTML(r.id)}')">
+<i class="bi bi-mic"></i>
+ارائه کتاب
+</button>
+`}
+
+</td>
+
+<td>
+
+<button class="btn btn-sm btn-outline-danger"
+onclick="deleteReservation('${escapeHTML(r.id)}')">
+حذف
+</button>
+
+</td>
+
+</tr>
+`;
+}).join("")
+:`
+<tr>
+<td colspan="7" class="text-center py-5 text-secondary">
+رزروی وجود ندارد.
+</td>
+</tr>
+`}
+
+</tbody>
+</table>
+</div>
+</div>
+`;
+}
+
+function deleteReservation(id){
+if(!confirm("این رزرو حذف شود؟"))return;
+
+const reservation=S.res.find(r=>String(r.id)===String(id));
+
+if(reservation){
+
+const scoreKeys=[
+`read-admin-${reservation.id}`,
+`presentation-admin-${reservation.id}`,
+`rating-${reservation.id}`
+];
+
+scoreKeys.forEach(key=>{
+const index=S.scoreHistory.findIndex(x=>String(x.uniqueKey)===key);
+
+if(index>=0){
+const score=S.scoreHistory[index];
+const student=findStudent(score.student);
+
+if(student){
+student.pts=Math.max(0,Number(student.pts||0)-Number(score.amount||0));
+}
+
+S.scoreHistory.splice(index,1);
+}
+});
+
+}
+
+S.res=S.res.filter(r=>String(r.id)!==String(id));
+
+saveState();
+render();
+}
+
+function excelView(){
+return`
+<div class="page-title">مدیریت کتاب‌ها</div>
+<div class="page-description">ثبت و بروزرسانی کتاب‌ها از طریق Excel</div>
+
+<div class="row g-3">
+
+<div class="col-lg-7">
+
+<div class="upload-zone">
+
+<div class="fs-1 text-success mb-3">
+<i class="bi bi-file-earmark-spreadsheet"></i>
+</div>
+
+<h2 class="h5 fw-bold">ورود اطلاعات از Excel</h2>
+
+<p class="text-secondary small">
+ستون‌های پیشنهادی:
+نام کتاب، موضوع، نام نویسنده، تاریخ انتشار، پایه تحصیلی و IP
+</p>
+
+<input id="booksExcel" type="file" accept=".xlsx,.xls,.csv" class="form-control mb-3">
+
+<div class="d-flex flex-wrap gap-2">
+
+<button class="btn btn-success" onclick="importBooks(false)">
+<i class="bi bi-cloud-upload"></i>
+جایگزینی کامل کتاب‌ها
+</button>
+
+<button class="btn btn-primary" onclick="importBooks(true)">
+<i class="bi bi-plus-circle"></i>
+افزودن به کتاب‌های موجود
+</button>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-5">
+
+<div class="card-modern p-4 h-100">
+
+<h2 class="h6 fw-bold mb-3">
+وضعیت کتابخانه
+</h2>
+
+<div class="row g-2">
+
+<div class="col-6">
+<div class="info-box">
+تعداد کتاب
+<strong>${formatScore(S.books.length)}</strong>
+</div>
+</div>
+
+<div class="col-6">
+<div class="info-box">
+دسته‌ها
+<strong>${formatScore(S.cats.length)}</strong>
+</div>
+</div>
+
+<div class="col-6">
+<div class="info-box">
+رزروها
+<strong>${formatScore(S.res.length)}</strong>
+</div>
+</div>
+
+<div class="col-6">
+<div class="info-box">
+دانش‌آموزان
+<strong>${formatScore(S.students.length)}</strong>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="card-modern p-3 mt-3">
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+<div>
+<h2 class="h6 fw-bold mb-1">وضعیت اتصال</h2>
+
+<div class="small ${CLOUD_READY?"text-success":"text-danger"}">
+
+<i class="bi ${CLOUD_READY?"bi-cloud-check":"bi-cloud-slash"}"></i>
+
+${CLOUD_READY
+?"اتصال به فضای ابری فعال است"
+:"اتصال به فضای ابری برقرار نیست"}
+
+</div>
+</div>
+
+<button class="btn btn-outline-primary btn-sm" onclick="forceCloudSync()">
+<i class="bi bi-arrow-repeat"></i>
+همگام‌سازی
+</button>
+
+</div>
+</div>
+`;
+}
+
+async function forceCloudSync(){
+const ok=await saveState();
+
+if(ok){
+alert("اطلاعات با موفقیت ذخیره شد.");
+}else{
+alert("ذخیره اطلاعات انجام نشد.");
+}
+
+render();
+}
+
+function studentsView(){
+if(U.role!=="admin")return homeView();
+
+return`
+<div class="page-title">مدیریت کاربران</div>
+
+<div class="page-description">
+مدیریت دانش‌آموزان و رمز ورود
+</div>
+
+<div class="card-modern p-3 mb-3">
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+<div>
+<div class="fw-bold">تعداد دانش‌آموزان</div>
+<div class="stat-number">${formatScore(S.students.length)}</div>
+</div>
+
+<button class="btn btn-success" onclick="addStudent()">
+<i class="bi bi-person-plus"></i>
+دانش‌آموز جدید
+</button>
+
+</div>
+</div>
+
+<div class="card-modern p-3">
+
+<div class="table-wrap">
+
+<table class="table table-modern align-middle">
+
+<thead>
+<tr>
+<th>نام</th>
+<th>پایه</th>
+<th>رمز ورود</th>
+<th>امتیاز</th>
+<th>عملیات</th>
+</tr>
+</thead>
+
+<tbody>
+
+${S.students.length
+?S.students.map(student=>`
+<tr>
+
+<td>
+<button class="student-name-link" onclick="openStudentProfile('${escapeHTML(student.code)}')">
+${escapeHTML(student.name)}
+</button>
+</td>
+
+<td>${escapeHTML(student.grade||"-")}</td>
+
+<td>${escapeHTML(student.password||"-")}</td>
+
+<td class="fw-bold text-primary">
+${formatScore(student.pts)}
+</td>
+
+<td>
+
+<div class="d-flex gap-1">
+
+<button class="btn btn-sm btn-outline-primary"
+onclick="editStudent('${escapeHTML(student.code)}')">
+ویرایش
+</button>
+
+<button class="btn btn-sm btn-outline-danger"
+onclick="deleteStudent('${escapeHTML(student.code)}')">
+حذف
+</button>
+
+</div>
+
+</td>
+
+</tr>
+`).join("")
+:`
+<tr>
+<td colspan="5" class="text-center py-5 text-secondary">
+دانش‌آموزی ثبت نشده است.
+</td>
+</tr>
+`}
+
+</tbody>
+</table>
+</div>
+</div>
+`;
+}
+
+function addStudent(){
+const name=prompt("نام و نام خانوادگی:");
+
+if(!name?.trim())return;
+
+const grade=prompt("پایه تحصیلی:","هفتم")||"";
+
+let password=prompt("رمز عبور دانش‌آموز:");
+
+if(password===null)return;
+
+password=password.trim();
+
+if(!password){
+alert("رمز عبور نمی‌تواند خالی باشد.");
+return;
+}
+
+if(S.students.some(s=>String(s.password)===password)){
+alert("این رمز قبلاً برای دانش‌آموز دیگری ثبت شده است. رمز دیگری انتخاب کنید.");
+return;
+}
+
+const code=generateStudentCode();
+
+S.students.push({
+code,
+name:name.trim(),
+grade:grade.trim(),
+password,
+pts:0
+});
+
+saveState();
+
+alert(`دانش‌آموز «${name.trim()}» ثبت شد.`);
+
+render();
+}
+
+function editStudent(code){
+const student=findStudent(code);
+
+if(!student)return;
+
+const name=prompt("نام:",student.name);
+
+if(name===null)return;
+
+const grade=prompt("پایه:",student.grade||"");
+
+if(grade===null)return;
+
+const password=prompt("رمز عبور:",student.password||"");
+
+if(password===null)return;
+
+const cleanPassword=password.trim();
+
+if(!cleanPassword){
+alert("رمز عبور نمی‌تواند خالی باشد.");
+return;
+}
+
+const duplicate=S.students.some(s=>
+String(s.code)!==String(code)&&
+String(s.password)===cleanPassword
+);
+
+if(duplicate){
+alert("این رمز قبلاً برای دانش‌آموز دیگری ثبت شده است.");
+return;
+}
+
+student.name=name.trim();
+student.grade=grade.trim();
+student.password=cleanPassword;
+
+saveState();
+render();
+}
+
+function deleteStudent(code){
+if(!confirm("این دانش‌آموز حذف شود؟"))return;
+
+S.students=S.students.filter(s=>String(s.code)!==String(code));
+
+S.res=S.res.filter(r=>String(r.student)!==String(code));
+
+S.directRecs=S.directRecs.filter(r=>
+String(r.fromCode)!==String(code)&&
+String(r.toCode)!==String(code)
+);
+
+S.scoreHistory=S.scoreHistory.filter(x=>String(x.student)!==String(code));
+
+saveState();
+render();
+}
+
+function settingsView(){
+if(U.role!=="admin")return homeView();
+
+return`
+<div class="page-title">تنظیمات</div>
+<div class="page-description">تنظیمات سامانه کتابخانه</div>
+
+<div class="row g-3">
+
+<div class="col-lg-6">
+
+<div class="card-modern p-4 h-100">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-shield-lock"></i>
+رمز مدیر
+</h2>
+
+<div class="input-group">
+
+<input id="adminPassword"
+type="password"
+class="form-control"
+value="${escapeHTML(S.pw||"admin123")}">
+
+<button class="btn btn-primary" onclick="changeAdminPassword()">
+ذخیره
+</button>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-6">
+
+<div class="card-modern p-4 h-100">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-calendar-check"></i>
+مهلت امانت
+</h2>
+
+<div class="input-group">
+
+<input id="loanDays"
+type="number"
+min="1"
+class="form-control"
+value="${Number(S.days)||7}">
+
+<span class="input-group-text">روز</span>
+
+<button class="btn btn-primary" onclick="changeLoanDays()">
+ذخیره
+</button>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-6">
+
+<div class="card-modern p-4 h-100">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-stars"></i>
+حد نصاب سطح دوم
+</h2>
+
+<div class="input-group">
+
+<input id="levelThreshold"
+type="number"
+min="1"
+class="form-control"
+value="${Number(S.level2Threshold)||10}">
+
+<span class="input-group-text">امتیاز</span>
+
+<button class="btn btn-primary" onclick="changeLevelThreshold()">
+ذخیره
+</button>
+
+</div>
+</div>
+</div>
+
+<div class="col-lg-6">
+
+<div class="card-modern p-4 h-100">
+
+<h2 class="h6 fw-bold mb-3">
+<i class="bi bi-cloud-check"></i>
+ذخیره‌سازی
+</h2>
+
+<p class="small text-secondary">
+اطلاعات کتاب‌ها، کاربران، رزروها و امتیازها در فضای ابری ذخیره می‌شوند.
+</p>
+
+<button class="btn btn-success" onclick="forceCloudSync()">
+<i class="bi bi-cloud-upload"></i>
+ذخیره فوری اطلاعات
+</button>
+
+</div>
+</div>
+
+</div>
+`;
+}
+
+function changeAdminPassword(){
+const input=$("#adminPassword");
+
+if(!input)return;
+
+const value=input.value.trim();
+
+if(!value){
+alert("رمز عبور نمی‌تواند خالی باشد.");
+return;
+}
+
+S.pw=value;
+
+saveState();
+
+alert("رمز مدیر تغییر کرد.");
+render();
+}
+
+function changeLoanDays(){
+const input=$("#loanDays");
+
+if(!input)return;
+
+const value=Math.max(1,Number(input.value)||7);
+
+S.days=value;
+
+saveState();
+
+alert("مهلت امانت ذخیره شد.");
+render();
+}
+
+function changeLevelThreshold(){
+const input=$("#levelThreshold");
+
+if(!input)return;
+
+const value=Math.max(1,Number(input.value)||10);
+
+S.level2Threshold=value;
+
+saveState();
+
+alert("حد نصاب سطح ذخیره شد.");
+render();
+}
+
+function deleteBook(ip){
+if(!confirm("این کتاب حذف شود؟"))return;
+
+S.books=S.books.filter(b=>String(b.ip)!==String(ip));
+
+S.res=S.res.filter(r=>String(r.book)!==String(ip));
+
+S.directRecs=S.directRecs.filter(r=>String(r.book)!==String(ip));
+
+S.scoreHistory=S.scoreHistory.filter(x=>String(x.book)!==String(ip));
+
+delete S.over[ip];
+
+saveState();
+navigateRoot("home");
+}
+
+function saveBookEdit(ip){
+const book=findBook(ip);
+
+if(!book)return;
+
+const name=$("#editBookName")?.value.trim();
+const author=$("#editBookAuthor")?.value.trim();
+const subject=$("#editBookSubject")?.value.trim();
+const date=$("#editBookDate")?.value.trim();
+const grade=$("#editBookGrade")?.value.trim();
+const imageInput=$("#editBookImage");
+
+if(!name){
+alert("نام کتاب را وارد کنید.");
+return;
+}
+
+book.name=name;
+book.author=author;
+book.subject=subject;
+book.date=date;
+book.grade=grade;
+
+ensureCategory(subject);
+
+const file=imageInput?.files?.[0];
+
+if(file){
+
+const reader=new FileReader();
+
+reader.onload=e=>{
+
+S.over[ip]={
+...(S.over[ip]||{}),
+name,
+img:e.target.result
+};
+
+saveState();
+
+alert("اطلاعات کتاب ذخیره شد.");
+
+render();
+};
+
+reader.readAsDataURL(file);
+
+return;
+}
+
+S.over[ip]={
+...(S.over[ip]||{}),
+name
+};
+
+saveState();
+
+alert("اطلاعات کتاب ذخیره شد.");
+
+render();
+}
+
+initializeApp();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
     >
     <link
         rel="stylesheet"
