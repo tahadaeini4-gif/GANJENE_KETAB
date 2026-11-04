@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<link rel="manifest" href="./manifest.webmanifest">
 <title>گنجینه ی کتاب</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -550,77 +552,153 @@ rec.seen=!!rec.seen;
 return state;
 }
 
-async function loadState(){
-try{
-const response=await fetch(API_URL+"?t="+Date.now(),{
-method:"GET",
-cache:"no-store"
-});
+/* ذخیره‌سازی محلی پایدار (IndexedDB) و همگام‌سازی امن با سرور */
+const LOCAL_DB_NAME="ganjineh-ketab-db";
+const LOCAL_DB_VERSION=1;
+const LOCAL_STORE="app";
+let LOCAL_DB_PROMISE=null;
+let LOCAL_HAS_DATA=false;
+let CLOUD_BASELINE_KNOWN=false;
+let LOCAL_WRITE_CHAIN=Promise.resolve();
+let SYNC_IN_PROGRESS=false;
+let SYNC_REQUESTED=false;
+let LAST_LOCAL_SAVE=0;
 
-if(!response.ok)throw new Error("GET "+response.status);
-
-const result=await response.json();
-
-if(!result||!result.state)throw new Error("state not found");
-
-CLOUD_READY=true;
-return normalizeState(result.state);
-}catch(error){
-CLOUD_READY=false;
-console.error(error);
-return normalizeState(createDefaultState());
+function openLocalDB(){
+ if(!('indexedDB' in window)) return Promise.reject(new Error('مرورگر از IndexedDB پشتیبانی نمی‌کند'));
+ if(LOCAL_DB_PROMISE) return LOCAL_DB_PROMISE;
+ LOCAL_DB_PROMISE=new Promise((resolve,reject)=>{
+  const request=indexedDB.open(LOCAL_DB_NAME,LOCAL_DB_VERSION);
+  request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains(LOCAL_STORE))db.createObjectStore(LOCAL_STORE);};
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>reject(request.error||new Error('خطا در بازکردن پایگاه داده محلی'));
+ });
+ return LOCAL_DB_PROMISE;
 }
+
+async function readLocalRecord(key){
+ const db=await openLocalDB();
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(LOCAL_STORE,'readonly');
+  const req=tx.objectStore(LOCAL_STORE).get(key);
+  req.onsuccess=()=>resolve(req.result??null);
+  req.onerror=()=>reject(req.error);
+ });
+}
+
+async function writeLocalRecord(key,value){
+ const db=await openLocalDB();
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(LOCAL_STORE,'readwrite');
+  tx.objectStore(LOCAL_STORE).put(value,key);
+  tx.oncomplete=()=>resolve(true);
+  tx.onerror=()=>reject(tx.error||new Error('ذخیره محلی ناموفق بود'));
+  tx.onabort=()=>reject(tx.error||new Error('ذخیره محلی لغو شد'));
+ });
+}
+
+function persistLocalState(state){
+ const snapshot=normalizeState(state);
+ const record={state:snapshot,updatedAt:Date.now(),schema:1,baselineKnown:CLOUD_BASELINE_KNOWN};
+ LOCAL_WRITE_CHAIN=LOCAL_WRITE_CHAIN.then(()=>writeLocalRecord('state',record));
+ return LOCAL_WRITE_CHAIN.then(()=>{LOCAL_HAS_DATA=true;LAST_LOCAL_SAVE=record.updatedAt;return true;});
+}
+
+async function loadState(){
+ try{
+  const response=await fetch(API_URL+"?t="+Date.now(),{method:"GET",cache:"no-store"});
+  if(!response.ok)throw new Error("GET "+response.status);
+  const result=await response.json();
+  if(!result||!result.state)throw new Error("state not found");
+  CLOUD_READY=true;
+  CLOUD_BASELINE_KNOWN=true;
+  return normalizeState(result.state);
+ }catch(error){CLOUD_READY=false;console.warn('همگام‌سازی ابری در دسترس نیست:',error);return null;}
+}
+
+async function syncLocalToCloud(){
+ if(SYNC_IN_PROGRESS||!navigator.onLine||!CLOUD_BASELINE_KNOWN)return false;
+ await LOCAL_WRITE_CHAIN.catch(()=>{});
+ let record;
+ try{record=await readLocalRecord('state');}catch(error){console.error(error);return false;}
+ if(!record||!record.state)return false;
+ SYNC_IN_PROGRESS=true;CLOUD_SAVING=true;
+ try{
+  const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(record.state)});
+  if(!response.ok)throw new Error("POST "+response.status);
+  const result=await response.json();
+  if(result&&result.ok===false)throw new Error(result.error||"save failed");
+  // اگر هنگام ارسال تغییری ثبت شود، آخرین نسخه را نیز ارسال کن.
+  let sentAt=record.updatedAt;
+  for(let pass=0;pass<5;pass++){
+   const latest=await readLocalRecord('state');
+   if(!latest||latest.updatedAt<=sentAt)break;
+   const nextResponse=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(latest.state)});
+   if(!nextResponse.ok)throw new Error("POST "+nextResponse.status);
+   const nextResult=await nextResponse.json();
+   if(nextResult&&nextResult.ok===false)throw new Error(nextResult.error||"save failed");
+   sentAt=latest.updatedAt;
+  }
+  CLOUD_READY=true;
+  return true;
+ }catch(error){CLOUD_READY=false;console.warn('اطلاعات روی دستگاه محفوظ است؛ ارسال به سرور به زمان اتصال موکول شد.',error);return false;}
+ finally{CLOUD_SAVING=false;SYNC_IN_PROGRESS=false;if(SYNC_REQUESTED){SYNC_REQUESTED=false;syncLocalToCloud();}}
 }
 
 async function saveState(){
-if(CLOUD_SAVING)return false;
-
-try{
-CLOUD_SAVING=true;
-
-const payload=JSON.stringify(normalizeState(S));
-
-const response=await fetch(API_URL,{
-method:"POST",
-headers:{"Content-Type":"text/plain;charset=utf-8"},
-body:payload
-});
-
-if(!response.ok)throw new Error("POST "+response.status);
-
-const result=await response.json();
-
-if(result&&result.ok===false){
-throw new Error(result.error||"save failed");
-}
-
-CLOUD_READY=true;
-return true;
-}catch(error){
-CLOUD_READY=false;
-console.error(error);
-return false;
-}finally{
-CLOUD_SAVING=false;
-}
+ try{
+  await persistLocalState(S);
+  // ذخیره محلی مستقل از اینترنت انجام می‌شود؛ ارسال ابری در پس‌زمینه است.
+  if(navigator.onLine){if(SYNC_IN_PROGRESS)SYNC_REQUESTED=true;else syncLocalToCloud();}
+  return true;
+ }catch(error){
+  console.error('خطا در ذخیره محلی اطلاعات:',error);
+  CLOUD_READY=false;
+  return false;
+ }
 }
 
 async function initializeApp(){
-S=normalizeState(createDefaultState());
-render();
-
-try{
-CLOUD_LOADING=true;
-const cloudState=await loadState();
-
-if(cloudState)S=normalizeState(cloudState);
-
-CLOUD_LOADING=false;
-render();
-}catch(error){
-CLOUD_LOADING=false;
-render();
+ S=normalizeState(createDefaultState());
+ if(navigator.storage&&navigator.storage.persist){navigator.storage.persist().catch(()=>{});}
+ try{
+  const localRecord=await readLocalRecord('state');
+  if(localRecord&&localRecord.state){
+   S=normalizeState(localRecord.state);
+   LOCAL_HAS_DATA=true;
+   CLOUD_BASELINE_KNOWN=localRecord.baselineKnown!==false;
+   LAST_LOCAL_SAVE=localRecord.updatedAt||0;
+   render();
+   // در صورت وجود نسخه محلی، آن را مرجع قرار بده تا پاسخ قدیمی سرور اطلاعات را بازنویسی نکند.
+   if(navigator.onLine) syncLocalToCloud();
+  }else{
+   render();
+   if(navigator.onLine){
+    CLOUD_LOADING=true;render();
+    const cloudState=await loadState();
+    if(cloudState){S=normalizeState(cloudState);await persistLocalState(S);}
+    else {CLOUD_BASELINE_KNOWN=false; await persistLocalState(S);}
+    CLOUD_LOADING=false;render();
+   }else{
+    // در اولین اجرای کاملاً آفلاین، داده پیش‌فرض را به‌عنوان نسخه معتبر ثبت نکن؛
+    // ابتدا باید یک‌بار نسخه اصلی سرور دریافت شود تا اطلاعات قبلی بازنویسی نشوند.
+    CLOUD_BASELINE_KNOWN=false;
+    CLOUD_LOADING=false;render();
+   }
+  }
+ }catch(error){
+  console.error('خطا در راه‌اندازی ذخیره‌سازی محلی:',error);
+  CLOUD_LOADING=false;
+  render();
+ }
 }
+
+window.addEventListener('online',()=>{syncLocalToCloud();});
+window.addEventListener('beforeunload',()=>{LOCAL_WRITE_CHAIN.catch(()=>{});});
+
+// ثبت برنامه آفلاین؛ مسیر نسبی برای پشتیبانی از GitHub Pages در مخزن‌های پروژه‌ای
+if('serviceWorker' in navigator && location.protocol!=='file:'){
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(err=>console.warn('ثبت حالت آفلاین ناموفق بود:',err)));
 }
 
 const SCORE_TYPES={
@@ -3626,13 +3704,13 @@ return`
 <div>
 <h2 class="h6 fw-bold mb-1">وضعیت اتصال</h2>
 
-<div class="small ${CLOUD_READY?"text-success":"text-danger"}">
+<div class="small ${CLOUD_READY?"text-success":(LOCAL_HAS_DATA?"text-primary":"text-danger")}">
 
-<i class="bi ${CLOUD_READY?"bi-cloud-check":"bi-cloud-slash"}"></i>
+<i class="bi ${CLOUD_READY?"bi-cloud-check":(LOCAL_HAS_DATA?"bi-hdd-fill":"bi-cloud-slash")}"></i>
 
 ${CLOUD_READY
-?"اتصال به فضای ابری فعال است"
-:"اتصال به فضای ابری برقرار نیست"}
+?"اتصال به فضای ابری فعال است؛ نسخه محلی نیز ذخیره می‌شود"
+:(LOCAL_HAS_DATA?"ذخیره‌سازی روی این دستگاه فعال است؛ همگام‌سازی پس از اتصال انجام می‌شود":"برای دریافت اطلاعات اولیه، یک‌بار با اینترنت وارد شوید")}
 
 </div>
 </div>
